@@ -26,12 +26,15 @@ class TimeSeriesTransformer(nn.Module):
         d_model: int,
         num_heads: int,
         d_ff: int,
+        d_freq: int,
         dropout: float,
         max_len: int = 5000,
     ):
         super().__init__()
         self.input_proj = nn.Linear(input_features, d_model)
-        self.time2vec = Time2VecTorch(d_model)
+        # this will lift the time dimension to d_freq +1  dimensions. 
+        # so, the total number of dims for the embedding will be d_model + d_freq +1
+        self.time2vec = Time2VecTorch(num_frequency=d_freq)   
         self.pos_enc = TimeSeriesPositionalEncoding(d_model, max_len)
         self.dropout = nn.Dropout(dropout)
         
@@ -52,12 +55,16 @@ class TimeSeriesTransformer(nn.Module):
         Returns:
             output: Predictions of shape (batch_size, seq_len, output_features)
         """
-        # Input projection
-        x_embed = self.input_proj(x)  # (B, T, d_model)
+        # Input projection - everything except time
+        features = x[:, :, :-1]     
+        x_embed = self.input_proj(features)  # (B, T, d_model)
         
         # Add Time2Vec temporal embeddings
+        print('Input tensor shape:', x.shape)
         t2v = self.time2vec(x)        # (B, T, d_model)
-        x_embed += t2v
+        print('Output tensor shape:', x_out.shape)
+        # x_embed += t2v
+        torch.cat([features, t_vec], dim=-1)
         
         # Add positional encoding
         x_embed = self.pos_enc(x_embed)

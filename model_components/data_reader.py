@@ -71,7 +71,13 @@ class FinancialTimeSeriesDataset(Dataset):
         for ticker in tickers:
             df = yf.download(ticker, start=start_date, end=end_date)[features]
             df = df.dropna()
-            print(df.head)
+
+            # Create normalized time feature (0-1 scale)
+            df['Time'] = (df.index - df.index.min()).days
+            df['Time'] = (df['Time'] - df['Time'].min()) / (df['Time'].max() - df['Time'].min())
+            
+            # Select features including 'Time'
+            df = df[features + ['Time']]  # Add Time to your features list
 
             if normalize == 'zscore':
                 df = (df - df.mean()) / (df.std() + 1e-8)

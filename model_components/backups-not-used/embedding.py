@@ -85,6 +85,7 @@ class StockEmbedding(nn.Module):
         self.time2vec = Time2VecTorch(num_frequency=num_frequency)
         
         # Positional Encoding (Optional, but can be useful if you are using a Transformer)
+        # need to change this embedding class to a more suitable one for num of time steps
         self.positional_encoding = nn.Embedding(1000, 64)  # assuming you have 1000 time steps at most
         
         # Example: a simple way to include velocity, acceleration, and technical indicators

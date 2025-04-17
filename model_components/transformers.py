@@ -1,8 +1,8 @@
 import torch
 import torch.nn as nn
-from positional_encoding import TimeSeriesPositionalEncoding
-from timeseries_embedding import Time2VecTorch
-from .masks import CausalMask
+from .positional_encoding import TimeSeriesPositionalEncoding
+from .timeseries_embedding import Time2VecTorch
+from .masks import PadMask, CausalMask
 
 class TimeSeriesTransformer(nn.Module):
     """
@@ -28,81 +28,83 @@ class TimeSeriesTransformer(nn.Module):
         d_ff: int,
         d_freq: int,
         dropout: float,
-        max_len: int = 5000,
+        forecast_horizon: int
     ):
         super().__init__()
-        self.input_proj = nn.Linear(input_features, d_model)
-        # this will lift the time dimension to d_freq +1  dimensions. 
-        # so, the total number of dims for the embedding will be d_model + d_freq +1
-        self.time2vec = Time2VecTorch(num_frequency=d_freq)   
-        self.pos_enc = TimeSeriesPositionalEncoding(d_model, max_len)
+        self.forecast_horizon = forecast_horizon
+
+        # for projecting all the features to a higher dimension
+        self.input_proj = nn.Linear(input_features-1, d_model)
+        
+        # Time2Vec module: outputs [batch, seq_len, d_freq + 1]
+        self.time2vec = Time2VecTorch(num_frequency=d_freq)
+
+        # Final input dim = projected features + time2vec
+        self.combined_dim = d_model + d_freq + 1
+
         self.dropout = nn.Dropout(dropout)
-        
-        self.decoder_layers = nn.ModuleList([
-            SelfAttentionDecoderLayer(d_model, num_heads, d_ff, dropout)
-            for _ in range(num_layers)
-        ])
-        
-        self.norm = nn.LayerNorm(d_model)
-        self.output_proj = nn.Linear(d_model, output_features)
-        self.max_len = max_len
+
+        decoder_layer = nn.TransformerDecoderLayer(
+            d_model=self.combined_dim, 
+            nhead=num_heads, 
+            dim_feedforward=d_ff,
+            dropout=dropout,
+            batch_first=True  # Important: ensures input is (batch, seq, feature)
+        )
+        self.decoder = nn.TransformerDecoder(decoder_layer, num_layers=num_layers)
+
+
+        self.norm = nn.LayerNorm(self.combined_dim)
+        self.output_proj = nn.Linear(self.combined_dim, output_features)
 
     def forward(self, x: torch.Tensor) -> torch.Tensor:
         """
+        CURRENTLY THIS VERSION SUPPORTS UNIVARIATE PREDICTION OF CLOSE PRICES ONLY.
+        WE CAN LATER EXPAND THIS TO BE AUTOREGRESSIVE OR HAVE MULTIVARIATE PREDICTIONS
         Args:
-            x: Input tensor of shape (batch_size, seq_len, input_features)
-        
+            x: Input tensor of shape (batch_size, context_len, input_features)
+            forecast_horizon: Number of future steps to forecast
+
         Returns:
-            output: Predictions of shape (batch_size, seq_len, output_features)
+            output: Predictions of shape (batch_size, forecast_horizon, output_features)
         """
-        # Input projection - everything except time
-        features = x[:, :, :-1]     
-        x_embed = self.input_proj(features)  # (B, T, d_model)
-        
-        # Add Time2Vec temporal embeddings
-        print('Input tensor shape:', x.shape)
-        t2v = self.time2vec(x)        # (B, T, d_model)
-        print('Output tensor shape:', x_out.shape)
-        # x_embed += t2v
-        torch.cat([features, t_vec], dim=-1)
-        
-        # Add positional encoding
-        x_embed = self.pos_enc(x_embed)
-        x_embed = self.dropout(x_embed)
+        batch_size, context_len, input_features = x.shape
 
-        # Create causal mask
-        causal_mask = CausalMask(x_embed)
+        # Split input into features and time
+        x_feat = x[:, :, :-1]  # [B, T, input_features - 1]
+        x_time = x[:, :, -1:]  # [B, T, 1]
 
-        # Process through decoder layers
-        for layer in self.decoder_layers:
-            x_embed, _ = layer(x_embed, attn_mask=causal_mask)
+        # Project input features
+        x_proj = self.input_proj(x_feat)  # [B, T, d_model]
+        x_time2vec = self.time2vec(x)     # [B, T, d_freq + 1]
+        x_combined = torch.cat([x_proj, x_time2vec], dim=-1)  # [B, T, combined_dim]
+        x_combined = self.dropout(x_combined)
 
-        # Final projection
-        x_embed = self.norm(x_embed)
-        output = self.output_proj(x_embed)
-        
-        return output
+        # Prepare tgt inputs (zeros, but add time info and Time2Vec)
+        tgt_time = x_time[:, -1:] + torch.arange(
+            1, self.forecast_horizon + 1, device=x.device
+        ).reshape(1, -1, 1)  # [B, forecast_horizon, 1]
 
-    def predict(self, x: torch.Tensor, forecast_steps: int) -> torch.Tensor:
-        """
-        Autoregressive prediction for time series forecasting
-        
-        Args:
-            x: Initial sequence (B, T, input_features)
-            forecast_steps: Number of steps to predict ahead
-            
-        Returns:
-            predictions: Forecasted values (B, forecast_steps, output_features)
-        """
-        predictions = []
-        current_seq = x
-        
-        for _ in range(forecast_steps):
-            # Get next prediction
-            output = self(current_seq)[:, -1:, :]  # (B, 1, output_features)
-            predictions.append(output)
-            
-            # Update sequence with new prediction
-            current_seq = torch.cat([current_seq, output], dim=1)
-            
-        return torch.cat(predictions, dim=1)
+        # Repeat last feature vector or use zeros for target initialization
+        tgt_init = torch.zeros(batch_size, self.forecast_horizon, x_feat.shape[-1], device=x.device)
+
+        tgt_full = torch.cat([tgt_init, tgt_time], dim=-1)  # [B, forecast_horizon, input_features]
+        tgt_proj = self.input_proj(tgt_full[:, :, :-1])     # [B, H, d_model]
+        tgt_time2vec = self.time2vec(tgt_full)              # [B, H, d_freq + 1]
+        tgt_combined = torch.cat([tgt_proj, tgt_time2vec], dim=-1)  # [B, H, combined_dim]
+        tgt_combined = self.dropout(tgt_combined)
+
+        # Causal mask for decoder
+        causal_mask = CausalMask(tgt_combined).to(dtype=torch.float32)
+        causal_mask = causal_mask.masked_fill(causal_mask == 1, float('-inf')).masked_fill(causal_mask == 0, float(0.0))
+
+        # Decode
+        decoded = self.decoder(tgt=tgt_combined, memory=x_combined, tgt_mask=causal_mask)
+
+        # Project to output
+        decoded = self.norm(decoded)
+        output = self.output_proj(decoded)  # [B, forecast_horizon, output_features]
+
+        # We only care about predicting the 'Close' value (1D for each future step)
+        return output  # This selects the 'Close' column for each time step in the forecast
+

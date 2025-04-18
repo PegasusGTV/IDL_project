@@ -38,4 +38,4 @@ Warning: Only showing 5 out of 46 parameter groups for clarity
 │   ├── Duration: 5 epochs (40 steps)
 │   ├── Start Factor: 0.1
 │   └── End Factor: 1.0
-Training:  62%|█████████████████████████████████████████▉                         | 5/8 [02:38<01:33, 31.08s/it, loss=58.3380, mae=0.3776]
+Training: 100%|███████████████████████████████████████████████████████████████████| 8/8 [03:51<00:00, 28.90s/it, loss=39.1651, mae=0.3077]

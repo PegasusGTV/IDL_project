@@ -1,0 +1,241 @@
+
+🔧 Configuring Optimizer:
+├── Type: ADAMW
+├── Base LR: 0.0005
+├── Weight Decay: 0.0001
+├── Parameter Groups:
+│   ├── Group: self_attn
+│   │   ├── LR: 0.0001
+│   │   └── Patterns: []
+│   ├── Group: ffn
+│   │   ├── LR: 0.0001
+│   │   └── Patterns: []
+│   └── Default Group (unmatched parameters)
+└── AdamW Specific:
+    ├── Betas: [0.9, 0.999]
+    ├── Epsilon: 1e-08
+    └── AMSGrad: False
+
+📈 Configuring Learning Rate Scheduler:
+├── Type: COSINE
+├── Cosine Annealing Settings:
+│   ├── T_max: 15 epochs (120 steps)
+│   └── Min LR: 1e-08
+├── Warmup Settings:
+│   ├── Duration: 5 epochs (40 steps)
+│   ├── Start Factor: 0.1
+│   └── End Factor: 1.0
+Warning: Only showing 5 out of 46 parameter groups for clarity
+/jet/home/psamal/hw_envs/idl_hw4/lib/python3.12/site-packages/torch/optim/lr_scheduler.py:240: UserWarning: The epoch parameter in `scheduler.step()` was not necessary and is being deprecated where possible. Please use `scheduler.step()` to step the scheduler. During the deprecation, if epoch is different from None, the closed form is used instead of the new chainable form, where available. Please open an issue if you are unable to replicate your use case: https://github.com/pytorch/pytorch/issues/new/choose.
+  warnings.warn(EPOCH_DEPRECATION_WARNING, UserWarning)
+
+📈 Configuring Learning Rate Scheduler:
+├── Type: COSINE
+├── Cosine Annealing Settings:
+│   ├── T_max: 15 epochs (120 steps)
+│   └── Min LR: 1e-08
+├── Warmup Settings:
+│   ├── Duration: 5 epochs (40 steps)
+│   ├── Start Factor: 0.1
+│   └── End Factor: 1.0
+Training: 100%|███████████████| 8/8 [00:00<00:00, 16.80it/s, loss=102.6682, mae=0.4935]
+Logging metrics: {'epoch': 1, 'train': {'train_loss': 0.4415834468819441, 'train_mae': 0.4934695363044739}, 'val': {'val_loss': 0.15461189063466882, 'val_mae': 0.2956477105617523}}
+splitting train
+metrics {'train_loss': 0.4415834468819441, 'train_mae': 0.4934695363044739}
+splitting val
+metrics {'val_loss': 0.15461189063466882, 'val_mae': 0.2956477105617523}
+
+📈 Epoch 0 Metrics:
+  TRAIN      | train_loss: 0.4416 | train_mae: 0.4935
+  VAL        | val_loss: 0.1546 | val_mae: 0.2956
+[34m[1mwandb[0m: [33mWARNING[0m Saving files without folders. If you want to preserve subdirectories pass base_path to wandb.save, i.e. wandb.save("/mnt/folder/file.h5", base_path="/mnt")
+Training: 100%|████████████████| 8/8 [00:00<00:00, 38.85it/s, loss=17.0471, mae=0.3520]
+Logging metrics: {'epoch': 2, 'train': {'train_loss': 0.07332097426537544, 'train_mae': 0.35201674699783325}, 'val': {'val_loss': 0.187318774321133, 'val_mae': 0.3911478519439697}}
+splitting train
+metrics {'train_loss': 0.07332097426537544, 'train_mae': 0.35201674699783325}
+splitting val
+metrics {'val_loss': 0.187318774321133, 'val_mae': 0.3911478519439697}
+
+📈 Epoch 1 Metrics:
+  TRAIN      | train_loss: 0.0733 | train_mae: 0.3520
+  VAL        | val_loss: 0.1873 | val_mae: 0.3911
+Training: 100%|█████████████████| 8/8 [00:00<00:00, 39.10it/s, loss=7.5422, mae=0.2795]
+Logging metrics: {'epoch': 3, 'train': {'train_loss': 0.03243948752360959, 'train_mae': 0.27946916222572327}, 'val': {'val_loss': 0.14277492394001973, 'val_mae': 0.3058713972568512}}
+splitting train
+metrics {'train_loss': 0.03243948752360959, 'train_mae': 0.27946916222572327}
+splitting val
+metrics {'val_loss': 0.14277492394001973, 'val_mae': 0.3058713972568512}
+
+📈 Epoch 2 Metrics:
+  TRAIN      | train_loss: 0.0324 | train_mae: 0.2795
+  VAL        | val_loss: 0.1428 | val_mae: 0.3059
+Training: 100%|█████████████████| 8/8 [00:00<00:00, 38.92it/s, loss=6.3284, mae=0.2424]
+Logging metrics: {'epoch': 4, 'train': {'train_loss': 0.027219095848180275, 'train_mae': 0.24242232739925385}, 'val': {'val_loss': 0.14968627720063435, 'val_mae': 0.31345513463020325}}
+splitting train
+metrics {'train_loss': 0.027219095848180275, 'train_mae': 0.24242232739925385}
+splitting val
+metrics {'val_loss': 0.14968627720063435, 'val_mae': 0.31345513463020325}
+
+📈 Epoch 3 Metrics:
+  TRAIN      | train_loss: 0.0272 | train_mae: 0.2424
+  VAL        | val_loss: 0.1497 | val_mae: 0.3135
+Training: 100%|█████████████████| 8/8 [00:00<00:00, 38.67it/s, loss=2.8545, mae=0.2093]
+Logging metrics: {'epoch': 5, 'train': {'train_loss': 0.012277299696479433, 'train_mae': 0.20926988124847412}, 'val': {'val_loss': 0.04757496985740324, 'val_mae': 0.17148374021053314}}
+splitting train
+metrics {'train_loss': 0.012277299696479433, 'train_mae': 0.20926988124847412}
+splitting val
+metrics {'val_loss': 0.04757496985740324, 'val_mae': 0.17148374021053314}
+
+📈 Epoch 4 Metrics:
+  TRAIN      | train_loss: 0.0123 | train_mae: 0.2093
+  VAL        | val_loss: 0.0476 | val_mae: 0.1715
+Training: 100%|█████████████████| 8/8 [00:00<00:00, 39.14it/s, loss=2.8652, mae=0.1872]
+Logging metrics: {'epoch': 6, 'train': {'train_loss': 0.01232327493708781, 'train_mae': 0.18718722462654114}, 'val': {'val_loss': 0.06485031655541172, 'val_mae': 0.20005246996879578}}
+splitting train
+metrics {'train_loss': 0.01232327493708781, 'train_mae': 0.18718722462654114}
+splitting val
+metrics {'val_loss': 0.06485031655541172, 'val_mae': 0.20005246996879578}
+
+📈 Epoch 5 Metrics:
+  TRAIN      | train_loss: 0.0123 | train_mae: 0.1872
+  VAL        | val_loss: 0.0649 | val_mae: 0.2001
+Training: 100%|█████████████████| 8/8 [00:00<00:00, 38.24it/s, loss=2.3799, mae=0.1708]
+Logging metrics: {'epoch': 7, 'train': {'train_loss': 0.010236074216663837, 'train_mae': 0.17077261209487915}, 'val': {'val_loss': 0.07331257441865457, 'val_mae': 0.21565942466259003}}
+splitting train
+metrics {'train_loss': 0.010236074216663837, 'train_mae': 0.17077261209487915}
+splitting val
+metrics {'val_loss': 0.07331257441865457, 'val_mae': 0.21565942466259003}
+
+📈 Epoch 6 Metrics:
+  TRAIN      | train_loss: 0.0102 | train_mae: 0.1708
+  VAL        | val_loss: 0.0733 | val_mae: 0.2157
+Training: 100%|█████████████████| 8/8 [00:00<00:00, 37.84it/s, loss=2.1005, mae=0.1576]
+Logging metrics: {'epoch': 8, 'train': {'train_loss': 0.00903450751336672, 'train_mae': 0.15757839381694794}, 'val': {'val_loss': 0.04983969846209466, 'val_mae': 0.17546972632408142}}
+splitting train
+metrics {'train_loss': 0.00903450751336672, 'train_mae': 0.15757839381694794}
+splitting val
+metrics {'val_loss': 0.04983969846209466, 'val_mae': 0.17546972632408142}
+
+📈 Epoch 7 Metrics:
+  TRAIN      | train_loss: 0.0090 | train_mae: 0.1576
+  VAL        | val_loss: 0.0498 | val_mae: 0.1755
+Training: 100%|█████████████████| 8/8 [00:00<00:00, 37.58it/s, loss=2.0135, mae=0.1470]
+Logging metrics: {'epoch': 9, 'train': {'train_loss': 0.008660155248337536, 'train_mae': 0.1470285952091217}, 'val': {'val_loss': 0.07483200524932136, 'val_mae': 0.21690267324447632}}
+splitting train
+metrics {'train_loss': 0.008660155248337536, 'train_mae': 0.1470285952091217}
+splitting val
+metrics {'val_loss': 0.07483200524932136, 'val_mae': 0.21690267324447632}
+
+📈 Epoch 8 Metrics:
+  TRAIN      | train_loss: 0.0087 | train_mae: 0.1470
+  VAL        | val_loss: 0.0748 | val_mae: 0.2169
+Training: 100%|█████████████████| 8/8 [00:00<00:00, 36.75it/s, loss=2.0387, mae=0.1389]
+Logging metrics: {'epoch': 10, 'train': {'train_loss': 0.008768734203711633, 'train_mae': 0.1389191448688507}, 'val': {'val_loss': 0.059446393651662814, 'val_mae': 0.19376172125339508}}
+splitting train
+metrics {'train_loss': 0.008768734203711633, 'train_mae': 0.1389191448688507}
+splitting val
+metrics {'val_loss': 0.059446393651662814, 'val_mae': 0.19376172125339508}
+
+📈 Epoch 9 Metrics:
+  TRAIN      | train_loss: 0.0088 | train_mae: 0.1389
+  VAL        | val_loss: 0.0594 | val_mae: 0.1938
+Training: 100%|█████████████████| 8/8 [00:00<00:00, 35.03it/s, loss=2.2580, mae=0.1328]
+Logging metrics: {'epoch': 11, 'train': {'train_loss': 0.009711920037384957, 'train_mae': 0.13282223045825958}, 'val': {'val_loss': 0.06451785187694378, 'val_mae': 0.20070014894008636}}
+splitting train
+metrics {'train_loss': 0.009711920037384957, 'train_mae': 0.13282223045825958}
+splitting val
+metrics {'val_loss': 0.06451785187694378, 'val_mae': 0.20070014894008636}
+
+📈 Epoch 10 Metrics:
+  TRAIN      | train_loss: 0.0097 | train_mae: 0.1328
+  VAL        | val_loss: 0.0645 | val_mae: 0.2007
+Training: 100%|█████████████████| 8/8 [00:00<00:00, 37.27it/s, loss=2.0076, mae=0.1273]
+Logging metrics: {'epoch': 12, 'train': {'train_loss': 0.008634946321047122, 'train_mae': 0.12726469337940216}, 'val': {'val_loss': 0.0510631105510125, 'val_mae': 0.17950613796710968}}
+splitting train
+metrics {'train_loss': 0.008634946321047122, 'train_mae': 0.12726469337940216}
+splitting val
+metrics {'val_loss': 0.0510631105510125, 'val_mae': 0.17950613796710968}
+
+📈 Epoch 11 Metrics:
+  TRAIN      | train_loss: 0.0086 | train_mae: 0.1273
+  VAL        | val_loss: 0.0511 | val_mae: 0.1795
+Training: 100%|█████████████████| 8/8 [00:00<00:00, 38.13it/s, loss=2.0500, mae=0.1227]
+Logging metrics: {'epoch': 13, 'train': {'train_loss': 0.008817392159053075, 'train_mae': 0.12267199903726578}, 'val': {'val_loss': 0.0612859465121839, 'val_mae': 0.1964571326971054}}
+splitting train
+metrics {'train_loss': 0.008817392159053075, 'train_mae': 0.12267199903726578}
+splitting val
+metrics {'val_loss': 0.0612859465121839, 'val_mae': 0.1964571326971054}
+
+📈 Epoch 12 Metrics:
+  TRAIN      | train_loss: 0.0088 | train_mae: 0.1227
+  VAL        | val_loss: 0.0613 | val_mae: 0.1965
+Training: 100%|█████████████████| 8/8 [00:00<00:00, 34.69it/s, loss=1.8284, mae=0.1184]
+Logging metrics: {'epoch': 14, 'train': {'train_loss': 0.007864108852921955, 'train_mae': 0.11841519922018051}, 'val': {'val_loss': 0.059155000052782264, 'val_mae': 0.19384945929050446}}
+splitting train
+metrics {'train_loss': 0.007864108852921955, 'train_mae': 0.11841519922018051}
+splitting val
+metrics {'val_loss': 0.059155000052782264, 'val_mae': 0.19384945929050446}
+
+📈 Epoch 13 Metrics:
+  TRAIN      | train_loss: 0.0079 | train_mae: 0.1184
+  VAL        | val_loss: 0.0592 | val_mae: 0.1938
+Training: 100%|█████████████████| 8/8 [00:00<00:00, 39.17it/s, loss=1.9772, mae=0.1150]
+Logging metrics: {'epoch': 15, 'train': {'train_loss': 0.008503942537091433, 'train_mae': 0.11500915139913559}, 'val': {'val_loss': 0.05603671652203405, 'val_mae': 0.1865384727716446}}
+splitting train
+metrics {'train_loss': 0.008503942537091433, 'train_mae': 0.11500915139913559}
+splitting val
+metrics {'val_loss': 0.05603671652203405, 'val_mae': 0.1865384727716446}
+
+📈 Epoch 14 Metrics:
+  TRAIN      | train_loss: 0.0085 | train_mae: 0.1150
+  VAL        | val_loss: 0.0560 | val_mae: 0.1865
+Training: 100%|█████████████████| 8/8 [00:00<00:00, 34.62it/s, loss=1.7121, mae=0.1115]
+Logging metrics: {'epoch': 16, 'train': {'train_loss': 0.007363926250767964, 'train_mae': 0.11151079833507538}, 'val': {'val_loss': 0.05719635377663537, 'val_mae': 0.19182904064655304}}
+splitting train
+metrics {'train_loss': 0.007363926250767964, 'train_mae': 0.11151079833507538}
+splitting val
+metrics {'val_loss': 0.05719635377663537, 'val_mae': 0.19182904064655304}
+
+📈 Epoch 15 Metrics:
+  TRAIN      | train_loss: 0.0074 | train_mae: 0.1115
+  VAL        | val_loss: 0.0572 | val_mae: 0.1918
+Training: 100%|█████████████████| 8/8 [00:00<00:00, 38.68it/s, loss=1.8785, mae=0.1087]
+Logging metrics: {'epoch': 17, 'train': {'train_loss': 0.008079672860161912, 'train_mae': 0.1087489128112793}, 'val': {'val_loss': 0.05483088998690895, 'val_mae': 0.18642020225524902}}
+splitting train
+metrics {'train_loss': 0.008079672860161912, 'train_mae': 0.1087489128112793}
+splitting val
+metrics {'val_loss': 0.05483088998690895, 'val_mae': 0.18642020225524902}
+
+📈 Epoch 16 Metrics:
+  TRAIN      | train_loss: 0.0081 | train_mae: 0.1087
+  VAL        | val_loss: 0.0548 | val_mae: 0.1864
+Training: 100%|█████████████████| 8/8 [00:00<00:00, 37.25it/s, loss=1.8305, mae=0.1063]
+Logging metrics: {'epoch': 18, 'train': {'train_loss': 0.007872926385732748, 'train_mae': 0.10625454783439636}, 'val': {'val_loss': 0.05823474265814979, 'val_mae': 0.19125531613826752}}
+splitting train
+metrics {'train_loss': 0.007872926385732748, 'train_mae': 0.10625454783439636}
+splitting val
+metrics {'val_loss': 0.05823474265814979, 'val_mae': 0.19125531613826752}
+
+📈 Epoch 17 Metrics:
+  TRAIN      | train_loss: 0.0079 | train_mae: 0.1063
+  VAL        | val_loss: 0.0582 | val_mae: 0.1913
+Training: 100%|█████████████████| 8/8 [00:00<00:00, 38.80it/s, loss=1.7389, mae=0.1039]
+Logging metrics: {'epoch': 19, 'train': {'train_loss': 0.0074791427100858385, 'train_mae': 0.10389561951160431}, 'val': {'val_loss': 0.058186685357500774, 'val_mae': 0.19397889077663422}}
+splitting train
+metrics {'train_loss': 0.0074791427100858385, 'train_mae': 0.10389561951160431}
+splitting val
+metrics {'val_loss': 0.058186685357500774, 'val_mae': 0.19397889077663422}
+
+📈 Epoch 18 Metrics:
+  TRAIN      | train_loss: 0.0075 | train_mae: 0.1039
+  VAL        | val_loss: 0.0582 | val_mae: 0.1940
+Training: 100%|█████████████████| 8/8 [00:00<00:00, 36.41it/s, loss=2.1088, mae=0.1023]
+Logging metrics: {'epoch': 20, 'train': {'train_loss': 0.009069915438291207, 'train_mae': 0.10228978842496872}, 'val': {'val_loss': 0.05184450548820066, 'val_mae': 0.18359604477882385}}
+splitting train
+metrics {'train_loss': 0.009069915438291207, 'train_mae': 0.10228978842496872}
+splitting val
+metrics {'val_loss': 0.05184450548820066, 'val_mae': 0.18359604477882385}
+
+📈 Epoch 19 Metrics:
+  TRAIN      | train_loss: 0.0091 | train_mae: 0.1023
+  VAL        | val_loss: 0.0518 | val_mae: 0.1836

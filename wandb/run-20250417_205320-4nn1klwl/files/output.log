@@ -1,0 +1,156 @@
+EXECUTABLE/jet/home/psamal/hw_envs/idl_hw4/bin/pythonEXECUTABLE
+
+🔧 Configuring Optimizer:
+├── Type: ADAMW
+├── Base LR: 0.0005
+├── Weight Decay: 0.0001
+├── Parameter Groups:
+│   ├── Group: self_attn
+│   │   ├── LR: 0.0001
+│   │   └── Patterns: []
+│   ├── Group: ffn
+│   │   ├── LR: 0.0001
+│   │   └── Patterns: []
+│   └── Default Group (unmatched parameters)
+└── AdamW Specific:
+    ├── Betas: [0.9, 0.999]
+    ├── Epsilon: 1e-08
+    └── AMSGrad: False
+
+📈 Configuring Learning Rate Scheduler:
+├── Type: COSINE
+├── Cosine Annealing Settings:
+│   ├── T_max: 15 epochs (120 steps)
+│   └── Min LR: 1e-08
+├── Warmup Settings:
+│   ├── Duration: 5 epochs (40 steps)
+│   ├── Start Factor: 0.1
+│   └── End Factor: 1.0
+Warning: Only showing 5 out of 46 parameter groups for clarity
+/jet/home/psamal/hw_envs/idl_hw4/lib/python3.12/site-packages/torch/optim/lr_scheduler.py:240: UserWarning: The epoch parameter in `scheduler.step()` was not necessary and is being deprecated where possible. Please use `scheduler.step()` to step the scheduler. During the deprecation, if epoch is different from None, the closed form is used instead of the new chainable form, where available. Please open an issue if you are unable to replicate your use case: https://github.com/pytorch/pytorch/issues/new/choose.
+  warnings.warn(EPOCH_DEPRECATION_WARNING, UserWarning)
+
+📈 Configuring Learning Rate Scheduler:
+├── Type: COSINE
+├── Cosine Annealing Settings:
+│   ├── T_max: 15 epochs (120 steps)
+│   └── Min LR: 1e-08
+├── Warmup Settings:
+│   ├── Duration: 5 epochs (40 steps)
+│   ├── Start Factor: 0.1
+│   └── End Factor: 1.0
+EXECUTABLE/jet/home/psamal/hw_envs/idl_hw4/bin/pythonEXECUTABLE
+Training: 100%|███████████████| 8/8 [00:00<00:00,  8.67it/s, loss=273.5831, mae=0.8756]
+EXECUTABLE/jet/home/psamal/hw_envs/idl_hw4/bin/pythonEXECUTABLE
+Using device: cuda
+Overwriting config.yaml
+[*********************100%***********************]  1 of 1 completed
+Processing ^SPX: 100%|██████████████████████████| 2481/2481 [00:00<00:00, 75812.27it/s]
+[*********************100%***********************]  1 of 1 completed
+Processing ^SPX: 100%|██████████████████████████| 2481/2481 [00:00<00:00, 83567.44it/s]
+==================================================
+        Financial Dataloader Verification
+==================================================
+Dataloader Partition     : train
+--------------------------------------------------
+Number of Batches        : 8
+Batch Size               : 256
+--------------------------------------------------
+Checking shapes of the first batch...
+
+Past Window Shape        : [256, 30, 6]
+Future Target Shape      : [256, 5, 1]
+--------------------------------------------------
+Window Size              : 30
+Forecast Horizon         : 5
+Num Input Features       : 6 (includes Time)
+Target Feature           : Close
+==================================================
+==================================================
+        Financial Dataloader Verification
+==================================================
+Dataloader Partition     : val
+--------------------------------------------------
+Number of Batches        : 3
+Batch Size               : 256
+--------------------------------------------------
+Checking shapes of the first batch...
+
+Past Window Shape        : [256, 30, 6]
+Future Target Shape      : [256, 5, 1]
+--------------------------------------------------
+Window Size              : 30
+Forecast Horizon         : 5
+Num Input Features       : 6 (includes Time)
+Target Feature           : Close
+==================================================
+6 1
+First input sample (shape: torch.Size([30, 6])):
+tensor([[-1.1553, -1.1658, -1.2095, -1.2168,  3.7631, -1.2194],
+        [-1.2221, -1.2323, -1.2475, -1.2508,  1.4925, -1.2165],
+        [-1.2450, -1.2281, -1.2336, -1.2180,  0.3967, -1.2156],
+        [-1.2117, -1.1940, -1.2001, -1.1860,  0.2457, -1.2146],
+        [-1.1836, -1.1703, -1.1748, -1.1600,  0.6451, -1.2137],
+        [-1.1594, -1.1613, -1.1489, -1.1563, -0.5749, -1.2127],
+        [-1.1634, -1.1739, -1.1647, -1.1696, -0.3658, -1.2090],
+        [-1.1732, -1.1687, -1.1710, -1.1592, -0.1027, -1.2080],
+        [-1.1584, -1.1610, -1.1568, -1.1609, -0.4223, -1.2071],
+        [-1.1523, -1.1402, -1.1404, -1.1314, -0.4192, -1.2061],
+        [-1.1295, -1.1297, -1.1175, -1.1247, -0.7904, -1.2033],
+        [-1.1223, -1.1184, -1.1102, -1.1108,  0.0948, -1.2023],
+        [-1.1091, -1.1175, -1.1040, -1.1106, -0.5294, -1.2014],
+        [-1.1053, -1.1059, -1.0932, -1.1001, -0.5679, -1.2004],
+        [-1.0986, -1.1059, -1.0951, -1.1020, -0.9274, -1.1995],
+        [-1.1015, -1.1065, -1.0916, -1.0972, -1.0462, -1.1966],
+        [-1.0999, -1.1099, -1.0921, -1.1001, -1.0891, -1.1957],
+        [-1.0977, -1.0998, -1.0867, -1.0916, -0.8339, -1.1947],
+        [-1.0914, -1.1008, -1.0914, -1.0988, -0.5959, -1.1938],
+        [-1.0974, -1.1003, -1.0882, -1.0897, -1.0315, -1.1928],
+        [-1.0907, -1.1016, -1.0894, -1.0958, -0.9959, -1.1900],
+        [-1.0951, -1.1018, -1.0910, -1.0951, -0.5923, -1.1890],
+        [-1.0943, -1.1004, -1.0921, -1.0975, -0.0125, -1.1881],
+        [-1.0978, -1.1024, -1.0915, -1.0943, -0.3597, -1.1871],
+        [-1.0952, -1.0985, -1.0880, -1.0910,  0.0330, -1.1862],
+        [-1.0912, -1.0974, -1.0855, -1.0936, -0.5256, -1.1833],
+        [-1.0942, -1.1048, -1.1027, -1.1063, -0.1663, -1.1824],
+        [-1.1063, -1.1107, -1.0981, -1.1001, -0.2315, -1.1814],
+        [-1.1001, -1.1067, -1.0921, -1.0997, -0.3126, -1.1805],
+        [-1.0952, -1.0932, -1.0831, -1.0825, -0.3609, -1.1795]])
+Corresponding target (shape: torch.Size([5, 1])):
+tensor([[-1.0843],
+        [-1.0835],
+        [-1.0893],
+        [-1.0798],
+        [-1.0814]])
+Inputs: torch.Size([256, 30, 6])
+Targets: torch.Size([256, 5, 1])
+torch.Size([256, 5, 1])
+===============================================================================================
+Layer (type:depth-idx)                        Output Shape              Param #
+===============================================================================================
+TimeSeriesTransformer                         [256, 5, 1]               --
+├─Linear: 1-1                                 [256, 30, 256]            1,536
+├─Time2VecTorch: 1-2                          [256, 30, 4]              8
+├─Dropout: 1-3                                [256, 30, 260]            --
+├─Linear: 1-4                                 [256, 5, 256]             (recursive)
+├─Time2VecTorch: 1-5                          [256, 5, 4]               (recursive)
+├─Dropout: 1-6                                [256, 5, 260]             --
+├─TransformerDecoder: 1-7                     [256, 5, 260]             --
+│    └─ModuleList: 2-1                        --                        --
+│    │    └─TransformerDecoderLayer: 3-1      [256, 5, 260]             1,078,204
+│    │    └─TransformerDecoderLayer: 3-2      [256, 5, 260]             1,078,204
+├─LayerNorm: 1-8                              [256, 5, 260]             520
+├─Linear: 1-9                                 [256, 5, 1]               261
+===============================================================================================
+Total params: 2,158,733
+Trainable params: 2,158,733
+Non-trainable params: 0
+Total mult-adds (Units.MEGABYTES): 275.07
+===============================================================================================
+Input size (MB): 0.18
+Forward/backward pass size (MB): 63.58
+Params size (MB): 4.29
+Estimated Total Size (MB): 68.06
+===============================================================================================
+[34m[1mwandb[0m: [33mWARNING[0m Calling wandb.login() after wandb.init() has no effect.
+True

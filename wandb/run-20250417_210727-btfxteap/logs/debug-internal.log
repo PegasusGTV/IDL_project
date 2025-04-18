@@ -1,0 +1,38 @@
+{"time":"2025-04-17T21:07:27.056431723-04:00","level":"INFO","msg":"stream: starting","core version":"0.19.9","symlink path":"/ocean/projects/cis250019p/gandotra/IDL_project/wandb/run-20250417_210727-btfxteap/logs/debug-core.log"}
+{"time":"2025-04-17T21:07:27.267143699-04:00","level":"INFO","msg":"created new stream","id":"btfxteap"}
+{"time":"2025-04-17T21:07:27.267218183-04:00","level":"INFO","msg":"stream: started","id":"btfxteap"}
+{"time":"2025-04-17T21:07:27.267235825-04:00","level":"INFO","msg":"writer: Do: started","stream_id":"btfxteap"}
+{"time":"2025-04-17T21:07:27.267234393-04:00","level":"INFO","msg":"handler: started","stream_id":"btfxteap"}
+{"time":"2025-04-17T21:07:27.267238415-04:00","level":"INFO","msg":"sender: started","stream_id":"btfxteap"}
+{"time":"2025-04-17T21:07:27.405952701-04:00","level":"INFO","msg":"Starting system monitor"}
+{"time":"2025-04-17T21:07:27.582592472-04:00","level":"INFO","msg":"Pausing system monitor"}
+{"time":"2025-04-17T21:07:27.582640573-04:00","level":"INFO","msg":"Resuming system monitor"}
+{"time":"2025-04-17T21:07:29.255036486-04:00","level":"INFO","msg":"Pausing system monitor"}
+{"time":"2025-04-17T21:07:29.353669555-04:00","level":"INFO","msg":"Resuming system monitor"}
+{"time":"2025-04-17T21:07:30.146876835-04:00","level":"INFO","msg":"Pausing system monitor"}
+{"time":"2025-04-17T21:07:37.416466131-04:00","level":"INFO","msg":"Resuming system monitor"}
+{"time":"2025-04-17T21:07:37.418030977-04:00","level":"INFO","msg":"Pausing system monitor"}
+{"time":"2025-04-17T21:07:37.489059469-04:00","level":"INFO","msg":"Resuming system monitor"}
+{"time":"2025-04-17T21:07:37.491874296-04:00","level":"INFO","msg":"Pausing system monitor"}
+{"time":"2025-04-17T21:07:37.537530741-04:00","level":"INFO","msg":"Resuming system monitor"}
+{"time":"2025-04-17T21:07:37.544960993-04:00","level":"INFO","msg":"Pausing system monitor"}
+{"time":"2025-04-17T21:07:37.59600317-04:00","level":"INFO","msg":"Resuming system monitor"}
+{"time":"2025-04-17T21:07:37.755301106-04:00","level":"INFO","msg":"Pausing system monitor"}
+{"time":"2025-04-17T21:07:37.779199888-04:00","level":"INFO","msg":"Resuming system monitor"}
+{"time":"2025-04-17T21:07:37.780218437-04:00","level":"INFO","msg":"Pausing system monitor"}
+{"time":"2025-04-17T21:07:37.815891255-04:00","level":"INFO","msg":"Resuming system monitor"}
+{"time":"2025-04-17T21:07:37.975018637-04:00","level":"INFO","msg":"Pausing system monitor"}
+{"time":"2025-04-17T21:07:38.006063042-04:00","level":"INFO","msg":"Resuming system monitor"}
+{"time":"2025-04-17T21:07:38.356943082-04:00","level":"INFO","msg":"Pausing system monitor"}
+{"time":"2025-04-17T21:07:38.390215393-04:00","level":"INFO","msg":"Resuming system monitor"}
+{"time":"2025-04-17T21:07:38.392704318-04:00","level":"INFO","msg":"Pausing system monitor"}
+{"time":"2025-04-17T21:07:38.498553137-04:00","level":"INFO","msg":"Resuming system monitor"}
+{"time":"2025-04-17T21:07:38.515462418-04:00","level":"INFO","msg":"Stopping system monitor"}
+{"time":"2025-04-17T21:07:38.515535489-04:00","level":"INFO","msg":"Stopped system monitor"}
+{"time":"2025-04-17T21:07:38.832489086-04:00","level":"INFO","msg":"fileTransfer: Close: file transfer manager closed"}
+{"time":"2025-04-17T21:07:38.97791731-04:00","level":"INFO","msg":"handler: operation stats","stats":{}}
+{"time":"2025-04-17T21:07:38.983151241-04:00","level":"INFO","msg":"stream: closing","id":"btfxteap"}
+{"time":"2025-04-17T21:07:38.983185403-04:00","level":"INFO","msg":"handler: closed","stream_id":"btfxteap"}
+{"time":"2025-04-17T21:07:38.983199416-04:00","level":"INFO","msg":"sender: closed","stream_id":"btfxteap"}
+{"time":"2025-04-17T21:07:38.983195479-04:00","level":"INFO","msg":"writer: Close: closed","stream_id":"btfxteap"}
+{"time":"2025-04-17T21:07:38.983548588-04:00","level":"INFO","msg":"stream: closed","id":"btfxteap"}

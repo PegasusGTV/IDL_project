@@ -116,17 +116,24 @@ class BaseTrainer(ABC):
         # WandB logging
         if self.use_wandb:
             wandb_metrics = {}
+            print(f"Logging metrics: {metrics}")  # Debugging line
             for split, split_metrics in metrics.items():
+                if split == 'epoch':  # Skip the 'epoch' key
+                    continue
+                print(f"splitting {split}")
+                print(f"metrics {split_metrics}")
                 for metric_name, value in split_metrics.items():
                     wandb_metrics[f'{split}/{metric_name}'] = value
-            wandb_metrics['learning_rate'] = self.optimizer.param_groups[0]['lr']
+                wandb_metrics['learning_rate'] = self.optimizer.param_groups[0]['lr']
             wandb.log(wandb_metrics, step=epoch)
 
         # Console logging
         print(f"\n📈 Epoch {epoch} Metrics:")
-        for split in metrics:
+        for split, split_metrics in metrics.items():
+            if split == 'epoch':  # Skip the 'epoch' key
+                continue
             print(f"  {split.upper():<10}", end="")
-            for metric, value in metrics[split].items():
+            for metric, value in split_metrics.items():
                 print(f" | {metric}: {value:.4f}", end="")
             print()
 

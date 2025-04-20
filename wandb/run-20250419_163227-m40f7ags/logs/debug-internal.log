@@ -1,0 +1,16 @@
+{"time":"2025-04-19T16:32:27.367226941-04:00","level":"INFO","msg":"stream: starting","core version":"0.19.9","symlink path":"/ocean/projects/cis250019p/gandotra/IDL_project/wandb/run-20250419_163227-m40f7ags/logs/debug-core.log"}
+{"time":"2025-04-19T16:32:27.633197683-04:00","level":"INFO","msg":"created new stream","id":"m40f7ags"}
+{"time":"2025-04-19T16:32:27.63327434-04:00","level":"INFO","msg":"stream: started","id":"m40f7ags"}
+{"time":"2025-04-19T16:32:27.633303435-04:00","level":"INFO","msg":"sender: started","stream_id":"m40f7ags"}
+{"time":"2025-04-19T16:32:27.633309562-04:00","level":"INFO","msg":"handler: started","stream_id":"m40f7ags"}
+{"time":"2025-04-19T16:32:27.633328171-04:00","level":"INFO","msg":"writer: Do: started","stream_id":"m40f7ags"}
+{"time":"2025-04-19T16:32:27.893953802-04:00","level":"INFO","msg":"Starting system monitor"}
+{"time":"2025-04-19T16:32:28.08454871-04:00","level":"INFO","msg":"Pausing system monitor"}
+{"time":"2025-04-19T16:37:26.058812964-04:00","level":"INFO","msg":"stream: closing","id":"m40f7ags"}
+{"time":"2025-04-19T16:37:26.058865-04:00","level":"INFO","msg":"Stopping system monitor"}
+{"time":"2025-04-19T16:37:26.058889308-04:00","level":"INFO","msg":"Stopped system monitor"}
+{"time":"2025-04-19T16:37:26.364101418-04:00","level":"INFO","msg":"fileTransfer: Close: file transfer manager closed"}
+{"time":"2025-04-19T16:37:26.488793049-04:00","level":"INFO","msg":"handler: closed","stream_id":"m40f7ags"}
+{"time":"2025-04-19T16:37:26.488841184-04:00","level":"INFO","msg":"sender: closed","stream_id":"m40f7ags"}
+{"time":"2025-04-19T16:37:26.488830692-04:00","level":"INFO","msg":"writer: Close: closed","stream_id":"m40f7ags"}
+{"time":"2025-04-19T16:37:26.489172957-04:00","level":"INFO","msg":"stream: closed","id":"m40f7ags"}

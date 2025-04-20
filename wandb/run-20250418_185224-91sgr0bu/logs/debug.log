@@ -1,0 +1,22 @@
+2025-04-18 18:52:24,645 INFO    MainThread:3917237 [wandb_setup.py:_flush():67] Current SDK version is 0.19.9
+2025-04-18 18:52:24,646 INFO    MainThread:3917237 [wandb_setup.py:_flush():67] Configure stats pid to 3917237
+2025-04-18 18:52:24,646 INFO    MainThread:3917237 [wandb_setup.py:_flush():67] Loading settings from /jet/home/gandotra/.config/wandb/settings
+2025-04-18 18:52:24,646 INFO    MainThread:3917237 [wandb_setup.py:_flush():67] Loading settings from /ocean/projects/cis250019p/gandotra/IDL_project/wandb/settings
+2025-04-18 18:52:24,646 INFO    MainThread:3917237 [wandb_setup.py:_flush():67] Loading settings from environment variables
+2025-04-18 18:52:24,646 INFO    MainThread:3917237 [wandb_init.py:setup_run_log_directory():662] Logging user logs to /ocean/projects/cis250019p/gandotra/IDL_project/wandb/run-20250418_185224-91sgr0bu/logs/debug.log
+2025-04-18 18:52:24,646 INFO    MainThread:3917237 [wandb_init.py:setup_run_log_directory():663] Logging internal logs to /ocean/projects/cis250019p/gandotra/IDL_project/wandb/run-20250418_185224-91sgr0bu/logs/debug-internal.log
+2025-04-18 18:52:24,646 INFO    MainThread:3917237 [wandb_init.py:init():781] calling init triggers
+2025-04-18 18:52:24,647 INFO    MainThread:3917237 [wandb_init.py:init():786] wandb.init called with sweep_config: {}
+config: {'Name': 'Nayesha-Gopal', 'data': {'root': '/local/hw4_data/hw4p1_data', 'train_partition': 'train', 'val_partition': 'val', 'test_partition': 'test', 'subset': 1.0, 'batch_size': 256, 'NUM_WORKERS': 2, 'forecast_horizon': 5}, 'model': {'d_model': 256, 'd_ff': 1024, 'd_freq': 3, 'num_layers': 2, 'num_heads': 2, 'dropout': 0.0, 'input_features': 6, 'output_features': 1, 'forecast_horizon': 5}, 'training': {'use_wandb': True, 'wandb_run_id': 'none', 'resume': False, 'epochs': 10, 'gradient_accumulation_steps': 1, 'wandb_project': 'IDL_final project PegasusNG'}, 'loss': {'label_smoothing': 0.0}, 'optimizer': {'name': 'adamw', 'lr': 0.0005, 'weight_decay': 0.0001, 'param_groups': [{'name': 'self_attn', 'patterns': [], 'lr': 0.0001, 'layer_decay': {'enabled': False, 'decay_rate': 0.8}}, {'name': 'ffn', 'patterns': [], 'lr': 0.0001, 'layer_decay': {'enabled': False, 'decay_rate': 0.8}}], 'layer_decay': {'enabled': False, 'decay_rate': 0.75}, 'sgd': {'momentum': 0.9, 'nesterov': True, 'dampening': 0}, 'adam': {'betas': [0.9, 0.999], 'eps': 1e-08, 'amsgrad': False}, 'adamw': {'betas': [0.9, 0.999], 'eps': 1e-08, 'amsgrad': False}}, 'scheduler': {'name': 'cosine', 'reduce_lr': {'mode': 'min', 'factor': 0.1, 'patience': 10, 'threshold': 0.0001, 'threshold_mode': 'rel', 'cooldown': 0, 'min_lr': 1e-07, 'eps': 1e-08}, 'cosine': {'T_max': 15, 'eta_min': 1e-08, 'last_epoch': -1}, 'cosine_warm': {'T_0': 4, 'T_mult': 4, 'eta_min': 1e-07, 'last_epoch': -1}, 'warmup': {'enabled': True, 'type': 'exponential', 'epochs': 5, 'start_factor': 0.1, 'end_factor': 1.0}}, '_wandb': {}}
+2025-04-18 18:52:24,647 INFO    MainThread:3917237 [wandb_init.py:init():809] starting backend
+2025-04-18 18:52:24,647 INFO    MainThread:3917237 [wandb_init.py:init():813] sending inform_init request
+2025-04-18 18:52:24,654 INFO    MainThread:3917237 [backend.py:_multiprocessing_setup():101] multiprocessing start_methods=fork,spawn,forkserver, using: spawn
+2025-04-18 18:52:24,654 INFO    MainThread:3917237 [wandb_init.py:init():823] backend started and connected
+2025-04-18 18:52:24,657 INFO    MainThread:3917237 [wandb_init.py:init():915] updated telemetry
+2025-04-18 18:52:25,071 INFO    MainThread:3917237 [wandb_init.py:init():939] communicating run to backend with 90.0 second timeout
+2025-04-18 18:52:25,187 INFO    MainThread:3917237 [wandb_init.py:init():1014] starting run threads in backend
+2025-04-18 18:52:25,514 INFO    MainThread:3917237 [wandb_run.py:_console_start():2454] atexit reg
+2025-04-18 18:52:25,514 INFO    MainThread:3917237 [wandb_run.py:_redirect():2306] redirect: wrap_raw
+2025-04-18 18:52:25,514 INFO    MainThread:3917237 [wandb_run.py:_redirect():2371] Wrapping output streams.
+2025-04-18 18:52:25,514 INFO    MainThread:3917237 [wandb_run.py:_redirect():2394] Redirects installed.
+2025-04-18 18:52:25,519 INFO    MainThread:3917237 [wandb_init.py:init():1056] run started, returning control to user process

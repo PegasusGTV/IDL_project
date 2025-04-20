@@ -1,0 +1,37 @@
+{
+  "os": "Linux-4.18.0-553.22.1.el8_10.x86_64-x86_64-with-glibc2.28",
+  "python": "CPython 3.12.4",
+  "startedAt": "2025-04-18T22:52:24.655189Z",
+  "args": [
+    "-f",
+    "/tmp/tmpru_58m3q.json",
+    "--HistoryManager.hist_file=:memory:"
+  ],
+  "program": "<python with no main file>",
+  "git": {
+    "remote": "https://github.com/PegasusGTV/IDL_project.git",
+    "commit": "be02149718776662a3eef612ae892fe20e05c2fc"
+  },
+  "email": "nayeshag@andrew.cmu.edu",
+  "root": "/ocean/projects/cis250019p/gandotra/IDL_project",
+  "host": "br012.ib.bridges2.psc.edu",
+  "executable": "/jet/home/psamal/hw_envs/idl_hw4/bin/python",
+  "cpu_count": 128,
+  "cpu_count_logical": 256,
+  "disk": {
+    "/": {
+      "total": "315926315008",
+      "used": "47228039168"
+    }
+  },
+  "memory": {
+    "total": "270109229056"
+  },
+  "cpu": {
+    "count": 128,
+    "countLogical": 256
+  },
+  "slurm": {
+    "export_env": "ALL"
+  }
+}

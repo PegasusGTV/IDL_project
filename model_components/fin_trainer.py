@@ -11,8 +11,9 @@ class TimeSeriesForecastingTrainer(BaseTrainer):
         self.loss_fn = nn.MSELoss()
         self.mae_metric = torchmetrics.MeanAbsoluteError().to(device)
         self.forecast_horizon = model.forecast_horizon
+        self.run_name = run_name
 
-    def _calculate_accuracy(self, predictions, targets, threshold=0.1):
+    def _calculate_accuracy(self, predictions, targets, threshold=0.001):
         """
         Calculate percentage accuracy based on a threshold.
         Args:
@@ -31,16 +32,23 @@ class TimeSeriesForecastingTrainer(BaseTrainer):
         self.model.train()
         total_loss = 0.0
         total_accuracy = 0.0
+        total_correct = 0.0
+        total_samples = 0.0
         batch_bar = tqdm(total=len(dataloader), desc="Training")
         
         for batch_idx, (src, tgt) in enumerate(dataloader):
             src = src.to(self.device)
             tgt = tgt.to(self.device)
+
+            print(src.shape)
+            print(tgt.shape)
             
             self.optimizer.zero_grad()
             
             with torch.autocast(device_type=self.device, dtype=torch.float16):
                 predictions = self.model(src)
+                print(f"train predictions are {predictions[0]}")
+                print(f"train targets are {tgt[0]}")
                 loss = self.loss_fn(predictions, tgt)
             
             # Gradient accumulation
@@ -57,13 +65,16 @@ class TimeSeriesForecastingTrainer(BaseTrainer):
             self.mae_metric.update(predictions, tgt)
             
             # Calculate accuracy for the batch
-            batch_accuracy = self._calculate_accuracy(predictions, tgt)
-            total_accuracy += batch_accuracy * src.size(0)
+            num_accurate = (torch.abs(predictions - tgt) / torch.abs(tgt) <= 0.03).float().sum()
+            total_correct += num_accurate.item()
+            total_samples += torch.numel(tgt)
+
+            total_accuracy = 100 * total_correct / total_samples
             
             batch_bar.set_postfix(
                 loss=f"{total_loss/(batch_idx+1):.4f}",
                 mae=f"{self.mae_metric.compute().item():.4f}",
-                accuracy=f"{(total_accuracy / ((batch_idx + 1) * src.size(0))):.2f}%"
+                accuracy=f"{100 * total_correct / total_samples:.2f}%"
             )
             batch_bar.update()
         
@@ -71,7 +82,7 @@ class TimeSeriesForecastingTrainer(BaseTrainer):
         return {
             'train_loss': total_loss / len(dataloader.dataset),
             'train_mae': self.mae_metric.compute().item(),
-            'train_accuracy': total_accuracy / len(dataloader.dataset)
+            'train_accuracy': 100 * total_correct / total_samples
         }
 
     def _validate_epoch(self, dataloader: DataLoader):
@@ -86,6 +97,8 @@ class TimeSeriesForecastingTrainer(BaseTrainer):
                 tgt = tgt.to(self.device)
                 
                 predictions = self.model(src)
+                print(f"val predictions are {predictions[0]}")
+                print(f"val targets are {tgt[0]}")
                 loss = self.loss_fn(predictions, tgt)
                 
                 total_loss += loss.item() * src.size(0)

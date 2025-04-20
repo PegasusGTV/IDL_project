@@ -8,6 +8,7 @@ def create_optimizer(model, opt_config):
     - Different learning rates for different parameter groups
     - Custom parameter group matching by name patterns
     """
+    print("here!")
     opt_name = opt_config['name'].lower()
     base_lr = opt_config['lr']
 

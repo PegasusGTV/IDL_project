@@ -5,6 +5,7 @@ from torch.utils.data import Dataset
 from typing import List, Tuple, Optional
 from datetime import datetime
 from tqdm import tqdm
+from sklearn.preprocessing import MinMaxScaler, StandardScaler
 
 
 class FinancialTimeSeriesDataset(Dataset):
@@ -19,7 +20,10 @@ class FinancialTimeSeriesDataset(Dataset):
         target: str = 'Close',
         normalize: Optional[str] = 'zscore',
         split: Optional[str] = None,  # 'train' or 'val' or None (use full set)
-        val_ratio: float = 0.2
+        val_ratio: float = 0.2,
+        shift: int = 2,  # NEW
+        scaler: Optional[object] = None,  # <-- new
+        fit_scaler: bool = False          # <-- new
     ):
         """
         Dataset for time series forecasting from Yahoo Finance.
@@ -42,58 +46,79 @@ class FinancialTimeSeriesDataset(Dataset):
         self.target = target
         self.normalize = normalize
 
-        self.data = []
-        self.targets = []
-
         self.split = split
+        self.shift = shift
+        self.scaler = scaler
+        self.fit_scaler = fit_scaler
 
-        all_sequences = []
-        all_labels = []
+        sequences = []
+        labels = []
+
+       
 
         for ticker in tickers:
             df = yf.download(ticker, start=start_date, end=end_date)[features]
             df = df.dropna()
+            # print(f"initial dataset is {df.head()}")
+            # print(f"df columns are {df.columns}")
+            # df['Time'] = (df.index - df.index.min()).days
+            df['Time', ticker] = np.arange(len(df))   #for continuous time
 
+            # print(f"after time dataset is {df.head()}")
+            # print(f"df columns are {df.columns}")
+
+            # Split into train/val if requested
+            train_end_idx = int(len(df) * (1 - val_ratio))
+
+            if split == 'train':
+                df = df.iloc[:train_end_idx]
+            elif split == 'val':
+                df = df.iloc[train_end_idx:]
+           
             # Add normalized time feature
-            df['Time'] = (df.index - df.index.min()).days
-            df['Time'] = (df['Time'] - df['Time'].min()) / (df['Time'].max() - df['Time'].min())
-            df = df[features + ['Time']]
+            # df['Time'] = (df['Time'] - df['Time'].min()) / (df['Time'].max() - df['Time'].min())
+            # print(f"after resorting dataset is {df["Close"].head()}")
+            df.columns = ['{}'.format(col[0]) for col in df.columns]
 
-            # Normalize
-            if normalize == 'zscore':
-                df = (df - df.mean()) / (df.std() + 1e-8)
-            elif normalize == 'minmax':
-                df = (df - df.min()) / (df.max() - df.min() + 1e-8)
+            if normalize:
+                scaler_cls = StandardScaler if normalize == 'zscore' else MinMaxScaler
+                if fit_scaler:
+                    self.scaler = scaler_cls()
+                    self.scaler.fit(df[features])
 
+                if self.scaler is not None:
+                    df[features] = self.scaler.transform(df[features])
+
+            # df = df.reset_index(drop=True)
+            # print(f"after resorting dataset is {df[features].head()}")
             values = df.values
             target_idx = features.index(target)
+            # print(f"values are {values}")
+            # print(f"target is {df[features[target_idx]]}")
             # CHANGE THIS SO THAT WE ARE PREDICTING THE ENTIRE FEATURE SEQ, NOT JUST THE CLOSING PRICE
 
-            for i in tqdm(range(len(values) - window_size - forecast_horizon + 1), desc=f"Processing {ticker}"):
+            for i in tqdm(
+                range(0, len(values) - window_size - forecast_horizon + 1, shift),
+                desc=f"Processing {ticker} ({split or 'full'})"
+            ):
                 window = values[i:i + window_size]
                 label_seq = values[i + window_size:i + window_size + forecast_horizon, target_idx]
-                all_sequences.append(torch.tensor(window, dtype=torch.float32))
-                all_labels.append(torch.tensor(label_seq, dtype=torch.float32))  # shape: [forecast_horizon]
+                
+                # DEBUG:
+                # print(window)
+                # print(label_seq)
 
-        self.input_features = df.shape[1]
-        self.output_features = 1       #hardcoding for now, TODO fix later
+                label_seq = torch.tensor(label_seq, dtype=torch.float32).unsqueeze(-1)  # [forecast_horizon, 1]
 
-        # Split into train/val if requested
-        total = len(all_sequences)
-        split_idx = int(total * (1 - val_ratio))
+                sequences.append(torch.tensor(window, dtype=torch.float32))  # [window_size, input_features]
+                labels.append(label_seq)                                     # [forecast_horizon, 1]
 
-        if split == 'train':
-            self.data = all_sequences[:split_idx]
-            self.targets = torch.stack(all_labels[:split_idx])  # Convert list to tensor
-            self.targets = self.targets.unsqueeze(-1)  # Reshape to (B, forecast_horizon, 1)
-        elif split == 'val':
-            self.data = all_sequences[split_idx:]
-            self.targets = torch.stack(all_labels[split_idx:])  # Convert list to tensor
-            self.targets = self.targets.unsqueeze(-1)  # Reshape to (B, forecast_horizon, 1)
-        else:
-            self.data = all_sequences
-            self.targets = torch.stack(all_labels)  # Convert list to tensor
-            self.targets = self.targets.unsqueeze(-1)  # Reshape to (B, forecast_horizon, 1)
+        self.data = torch.stack(sequences)      # [num_samples, window_size, input_features]
+        self.targets = torch.stack(labels)      # [num_samples, forecast_horizon, 1]
+        self.input_features = self.data.shape[-1]
+        self.output_features = 1  # still predicting only one feature TODO un-hard code
+
+        print(self.data, self.targets)
 
 
     def __len__(self):
@@ -107,46 +132,3 @@ class FinancialTimeSeriesDataset(Dataset):
                 - future_targets: shape [forecast_horizon]
         """
         return self.data[idx], self.targets[idx]
-
-def verify_financial_dataloader(dataloader):
-    '''
-    Verifies and displays key information about a FinancialTimeSeriesDataset dataloader.
-
-    1. Shows partition (train/val or full)
-    2. Displays number of batches and batch size
-    3. Displays input and output shapes from the first batch
-    4. Reports window size, forecast horizon, and number of input features
-    '''
-    def print_shapes(past_windows, future_targets):
-        print(f"{'Past Window Shape':<25}: {list(past_windows.shape)}")
-        print(f"{'Future Target Shape':<25}: {list(future_targets.shape)}")
-
-    print("=" * 50)
-    print(f"{'Financial Dataloader Verification':^50}")
-    print("=" * 50)
-
-    # Determine partition name if available
-    partition = getattr(dataloader.dataset, 'split', 'unspecified')
-    print(f"{'Dataloader Partition':<25}: {partition}")
-    print("-" * 50)
-
-    print(f"{'Number of Batches':<25}: {len(dataloader)}")
-    print(f"{'Batch Size':<25}: {dataloader.batch_size}")
-    print("-" * 50)
-
-    print(f"{'Checking shapes of the first batch...':<50}\n")
-    for i, batch in enumerate(dataloader):
-        if i > 0:
-            break
-        past_windows, future_targets = batch
-        print_shapes(past_windows, future_targets)
-
-    print("-" * 50)
-    print(f"{'Window Size':<25}: {dataloader.dataset.window_size}")
-    print(f"{'Forecast Horizon':<25}: {dataloader.dataset.forecast_horizon}")
-    if len(dataloader.dataset.features) > 0:
-        print(f"{'Num Input Features':<25}: {len(dataloader.dataset.features) + 1} (includes Time)")
-    else:
-        print(f"{'Num Input Features':<25}: Unknown")
-    print(f"{'Target Feature':<25}: {dataloader.dataset.target}")
-    print("=" * 50)

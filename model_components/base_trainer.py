@@ -74,14 +74,6 @@ class BaseTrainer(ABC):
         checkpoint_dir.mkdir(exist_ok=True)
         viz_dir.mkdir(exist_ok=True)
 
-        # Initialize WandB
-        if self.use_wandb:
-            wandb.init(
-                project=self.config['training'].get('wandb_project', 'time-series-forecasting'),
-                config=self.config,
-                name=run_name
-            )
-
         return expt_root, checkpoint_dir, viz_dir, checkpoint_dir / 'best_model.pth', checkpoint_dir / 'last_model.pth'
 
     @abstractmethod

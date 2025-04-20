@@ -35,6 +35,10 @@ class TimeSeriesTransformer(nn.Module):
 
         # for projecting all the features to a higher dimension
         self.input_proj = nn.Linear(input_features-1, d_model)
+        self.input_proj_target = nn.Linear(1
+        
+        , d_model)  # for tgt_init: only close
+
         
         # Time2Vec module: outputs [batch, seq_len, d_freq + 1]
         self.time2vec = Time2VecTorch(num_frequency=d_freq)
@@ -43,6 +47,9 @@ class TimeSeriesTransformer(nn.Module):
         self.combined_dim = d_model + d_freq + 1
 
         self.dropout = nn.Dropout(dropout)
+
+        # positional_encoding
+        self.positional_encoding = TimeSeriesPositionalEncoding(self.combined_dim, max_len=500)
 
         decoder_layer = nn.TransformerDecoderLayer(
             d_model=self.combined_dim, 
@@ -69,6 +76,7 @@ class TimeSeriesTransformer(nn.Module):
             output: Predictions of shape (batch_size, forecast_horizon, output_features)
         """
         batch_size, context_len, input_features = x.shape
+        print(x.shape)
 
         # Split input into features and time
         x_feat = x[:, :, :-1]  # [B, T, input_features - 1]
@@ -79,20 +87,44 @@ class TimeSeriesTransformer(nn.Module):
         x_time2vec = self.time2vec(x)     # [B, T, d_freq + 1]
         x_combined = torch.cat([x_proj, x_time2vec], dim=-1)  # [B, T, combined_dim]
         x_combined = self.dropout(x_combined)
+        x_combined = self.positional_encoding(x_combined)
+
+        # DEBUGGING THINGS
+        assert torch.isfinite(x).all(), "Non-finite (NaN or Inf) in input"
+        assert torch.isfinite(x_proj).all(), "Non-finite (NaN or Inf) after input_proj"
+        assert torch.isfinite(x_time2vec).all(), "Non-finite (NaN or Inf) in Time2Vec"
+
+        print(x_combined.shape)
+        # HARDCODED FEATURE INDICES, NEED TO FIX!!!
+        last_close = x_feat[:, -1:, 0:1]  # Shape: [B, 1, 1]
+        # print(f"last close dim is {last_close.shape}")
+        # last_close = x_close[:, -1:, :]  # [B, 1, 1]
+        # future_close = torch.zeros(batch_size, self.forecast_horizon - 1, 1, device=x.device)
+        # tgt_close = torch.cat([last_close, future_close], dim=1)  # [B, H, 1]
+
+        # # Prepare target features (repeat last known features)
+        # tgt_features = x_features[:, -1:, :].repeat(1, self.forecast_horizon, 1)  # [B, H, input_features - 2]
 
         # Prepare tgt inputs (zeros, but add time info and Time2Vec)
         tgt_time = x_time[:, -1:] + torch.arange(
             1, self.forecast_horizon + 1, device=x.device
         ).reshape(1, -1, 1)  # [B, forecast_horizon, 1]
+        # tgt_init = last_close.repeat(1, self.forecast_horizon, 1)  # [B, H, 1]
+        tgt_init = torch.zeros_like(last_close).repeat(1, self.forecast_horizon, 1)
+        tgt_full = torch.cat([tgt_init, tgt_time], dim=-1)  # [B, H, input_features]
+
 
         # Repeat last feature vector or use zeros for target initialization
-        tgt_init = torch.zeros(batch_size, self.forecast_horizon, x_feat.shape[-1], device=x.device)
+        # tgt_full = torch.cat([tgt_features, tgt_close, tgt_time], dim=-1)  # [B, H, input_features]
+        # print(f"target full shape is {tgt_full.shape}")
 
-        tgt_full = torch.cat([tgt_init, tgt_time], dim=-1)  # [B, forecast_horizon, input_features]
-        tgt_proj = self.input_proj(tgt_full[:, :, :-1])     # [B, H, d_model]
+        tgt_proj = self.input_proj_target(tgt_init)  # [B, H, d_model]
         tgt_time2vec = self.time2vec(tgt_full)              # [B, H, d_freq + 1]
         tgt_combined = torch.cat([tgt_proj, tgt_time2vec], dim=-1)  # [B, H, combined_dim]
         tgt_combined = self.dropout(tgt_combined)
+        tgt_combined = self.positional_encoding(tgt_combined)
+
+        # print(f"tgt combined shape is {tgt_combined.shape}")
 
         # Causal mask for decoder
         causal_mask = CausalMask(tgt_combined).to(dtype=torch.float32)
@@ -100,6 +132,7 @@ class TimeSeriesTransformer(nn.Module):
 
         # Decode
         decoded = self.decoder(tgt=tgt_combined, memory=x_combined, tgt_mask=causal_mask)
+        # print(decoded.shape)
 
         # Project to output
         decoded = self.norm(decoded)

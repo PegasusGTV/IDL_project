@@ -61,15 +61,15 @@ class TimeSeriesForecastingTrainer(BaseTrainer):
                 self.optimizer.zero_grad()
             
             # Update metrics
-            total_loss += loss.item() * src.size(0)
+            # total_loss += loss.item() * src.size(0)
+            total_loss += loss.item()
             self.mae_metric.update(predictions, tgt)
             
             # Calculate accuracy for the batch
-            num_accurate = (torch.abs(predictions - tgt) / torch.abs(tgt) <= 0.03).float().sum()
-            total_correct += num_accurate.item()
+            pct_error = torch.abs(predictions - tgt) / (torch.abs(tgt) + 1e-8)
+            accurate_preds = (pct_error <= 0.03).float().sum()
+            total_correct += accurate_preds.item()
             total_samples += torch.numel(tgt)
-
-            total_accuracy = 100 * total_correct / total_samples
             
             batch_bar.set_postfix(
                 loss=f"{total_loss/(batch_idx+1):.4f}",
@@ -79,6 +79,7 @@ class TimeSeriesForecastingTrainer(BaseTrainer):
             batch_bar.update()
         
         batch_bar.close()
+        print(f"\nTrain MSE: {total_loss / len(dataloader.dataset):.6f} | MAE: { self.mae_metric.compute().item():.6f} | Accuracy (±3%): {100 * total_correct / total_samples:.2f}%")
         return {
             'train_loss': total_loss / len(dataloader.dataset),
             'train_mae': self.mae_metric.compute().item(),

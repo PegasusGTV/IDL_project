@@ -31,7 +31,7 @@ training:
   wandb_project               : "IDL_final project PegasusNG" # wandb project to log to
 
 ###### Loss ----------------------------------------------------------------------
-loss: # Just good ol' CrossEntropy
+loss: # Just good ol' MSE
   label_smoothing: 0.0
 
 ###### Optimizer -----------------------------------------------------------------

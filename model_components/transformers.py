@@ -60,7 +60,16 @@ class TimeSeriesTransformer(nn.Module):
         self.decoder = nn.TransformerDecoder(decoder_layer, num_layers=num_layers)
 
         self.norm = nn.LayerNorm(self.combined_dim)
-        self.output_proj = nn.Linear(self.combined_dim, 1)
+        # self.output_proj = nn.Linear(self.combined_dim, 1)
+        self.scale_factor = nn.Parameter(torch.tensor(100.0))  # Start at 1.0, but it will be learned
+        self.output_proj = nn.Sequential(
+            nn.Linear(self.combined_dim, 2*d_model),
+            nn.GELU(),
+            nn.Dropout(dropout),
+            nn.Linear(2*d_model, d_model),
+            nn.GELU(),
+            nn.Linear(d_model, 1)
+        )
 
     def forward(self, x: torch.Tensor) -> torch.Tensor:
         """
@@ -74,7 +83,7 @@ class TimeSeriesTransformer(nn.Module):
             output: Predictions of shape (batch_size, forecast_horizon, output_features)
         """
         batch_size, context_len, input_features = x.shape
-        print(x.shape)
+        # print(x.shape)
 
         # Split input into features and time
         x_feat = x[:, :, :-1]  # [B, T, input_features - 1]
@@ -94,9 +103,12 @@ class TimeSeriesTransformer(nn.Module):
         assert torch.isfinite(x_proj).all(), "Non-finite (NaN or Inf) after input_proj"
         assert torch.isfinite(x_time2vec).all(), "Non-finite (NaN or Inf) in Time2Vec"
 
-        print(x_combined.shape)
+        # print(x_combined.shape)
         # HARDCODED FEATURE INDICES, NEED TO FIX!!!
-        last_close = x_feat[:, -1:, 3:4]  # Shape: [B, 1, 1]
+        # last_close = x_feat[:, -1:, 3:4]  # Shape: [B, 1, 1]
+        # print(f" last close is {last_close}")
+        last_feat = x_feat[:, -1:, :]  # Get all features from last time step [B, 1, input_features-1]
+        tgt_init = last_feat.repeat(1, self.forecast_horizon, 1)  # [B, H, input_features-1]
 
         # Prepare tgt inputs (zeros, but add time info and Time2Vec)
         tgt_time = x_time[:, -1:] + torch.arange(
@@ -104,7 +116,7 @@ class TimeSeriesTransformer(nn.Module):
         ).reshape(1, -1, 1)  # [B, forecast_horizon, 1]
         # tgt_init = last_close.repeat(1, self.forecast_horizon, 1)  # [B, H, 1]
         # Option 1: Repeat last close
-        tgt_init = last_close.repeat(1, self.forecast_horizon, 1)
+        # tgt_init = last_close.repeat(1, self.forecast_horizon, 1)
 
         # Option 2: Start with zeros
         # tgt_init = torch.zeros_like(last_close).repeat(1, self.forecast_horizon, 1)
@@ -117,7 +129,7 @@ class TimeSeriesTransformer(nn.Module):
         # tgt_full = torch.cat([tgt_features, tgt_close, tgt_time], dim=-1)  # [B, H, input_features]
         # print(f"target full shape is {tgt_full.shape}")
 
-        tgt_proj = self.input_proj_target(tgt_init)  # [B, H, d_model]
+        tgt_proj = self.input_proj(tgt_init)  # [B, H, d_model]
         tgt_time2vec = self.time2vec(tgt_full)              # [B, H, d_freq + 1]
         tgt_combined = torch.cat([tgt_proj, tgt_time2vec], dim=-1)  # [B, H, combined_dim]
         tgt_combined = self.positional_encoding(tgt_combined)
@@ -137,7 +149,7 @@ class TimeSeriesTransformer(nn.Module):
         # Project to output
         decoded = self.norm(decoded)
         output = self.output_proj(decoded)  # [B, forecast_horizon, output_features]
-
+        output = output * self.scale_factor
         # We only care about predicting the 'Close' value (1D for each future step)
         return output  # This selects the 'Close' column for each time step in the forecast
 

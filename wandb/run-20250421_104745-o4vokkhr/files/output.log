@@ -1,0 +1,46 @@
+here!
+Training:   0%|                                                                                        | 0/17 [00:00<?, ?it/s]/jet/home/psamal/hw_envs/idl_hw4/lib/python3.12/site-packages/torchmetrics/utilities/prints.py:43: UserWarning: The ``compute`` method of metric MeanAbsoluteError was called before the ``update`` method which may lead to errors, as metric states have not yet been updated.
+  warnings.warn(*args, **kwargs)  # noqa: B028
+Training: 100%|███████████████████████████████████| 17/17 [00:00<00:00, 41.52it/s, batch_accuracy=0.00%, loss=0.5344, mae=nan]
+Logging metrics: {'epoch': 1, 'train': {'train_loss': 0.14496528624258168, 'train_mae': nan, 'train_accuracy': 3.095684803001876}}
+splitting train
+metrics {'train_loss': 0.14496528624258168, 'train_mae': nan, 'train_accuracy': 3.095684803001876}
+
+📈 Epoch 0 Metrics:
+  TRAIN      | train_loss: 0.1450 | train_mae: nan | train_accuracy: 3.0957
+Training: 100%|███████████████████████████████████| 17/17 [00:00<00:00, 41.64it/s, batch_accuracy=0.00%, loss=0.3726, mae=nan]
+Logging metrics: {'epoch': 2, 'train': {'train_loss': 0.10276405980171004, 'train_mae': nan, 'train_accuracy': 3.9399624765478425}}
+splitting train
+metrics {'train_loss': 0.10276405980171004, 'train_mae': nan, 'train_accuracy': 3.9399624765478425}
+
+📈 Epoch 1 Metrics:
+  TRAIN      | train_loss: 0.1028 | train_mae: nan | train_accuracy: 3.9400
+Training: 100%|███████████████████████████████████| 17/17 [00:00<00:00, 42.66it/s, batch_accuracy=0.00%, loss=0.3008, mae=nan]
+Logging metrics: {'epoch': 3, 'train': {'train_loss': 0.09850410381803816, 'train_mae': nan, 'train_accuracy': 2.25140712945591}}
+splitting train
+metrics {'train_loss': 0.09850410381803816, 'train_mae': nan, 'train_accuracy': 2.25140712945591}
+
+📈 Epoch 2 Metrics:
+  TRAIN      | train_loss: 0.0985 | train_mae: nan | train_accuracy: 2.2514
+Training: 100%|███████████████████████████████████| 17/17 [00:00<00:00, 42.20it/s, batch_accuracy=0.00%, loss=0.2968, mae=nan]
+Logging metrics: {'epoch': 4, 'train': {'train_loss': 0.1025854802601333, 'train_mae': nan, 'train_accuracy': 2.345215759849906}}
+splitting train
+metrics {'train_loss': 0.1025854802601333, 'train_mae': nan, 'train_accuracy': 2.345215759849906}
+
+📈 Epoch 3 Metrics:
+  TRAIN      | train_loss: 0.1026 | train_mae: nan | train_accuracy: 2.3452
+Training: 100%|███████████████████████████████████| 17/17 [00:00<00:00, 41.77it/s, batch_accuracy=0.00%, loss=0.2706, mae=nan]
+Logging metrics: {'epoch': 5, 'train': {'train_loss': 0.09898060163234904, 'train_mae': nan, 'train_accuracy': 2.8142589118198873}}
+splitting train
+metrics {'train_loss': 0.09898060163234904, 'train_mae': nan, 'train_accuracy': 2.8142589118198873}
+
+📈 Epoch 4 Metrics:
+  TRAIN      | train_loss: 0.0990 | train_mae: nan | train_accuracy: 2.8143
+Training: 100%|███████████████████████████████████| 17/17 [00:00<00:00, 40.20it/s, batch_accuracy=0.00%, loss=0.2484, mae=nan]
+Logging metrics: {'epoch': 6, 'train': {'train_loss': 0.09317554516707308, 'train_mae': nan, 'train_accuracy': 2.1575984990619137}}
+splitting train
+metrics {'train_loss': 0.09317554516707308, 'train_mae': nan, 'train_accuracy': 2.1575984990619137}
+
+📈 Epoch 5 Metrics:
+  TRAIN      | train_loss: 0.0932 | train_mae: nan | train_accuracy: 2.1576
+Training:   0%|                                            | 0/17 [00:00<?, ?it/s, batch_accuracy=3.12%, loss=0.0116, mae=nan]

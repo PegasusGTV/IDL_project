@@ -1,0 +1,21 @@
+{"time":"2025-04-21T10:17:42.092615512-04:00","level":"INFO","msg":"stream: starting","core version":"0.19.9","symlink path":"/ocean/projects/cis250019p/gandotra/IDL_project/wandb/run-20250421_101742-oglpbah0/logs/debug-core.log"}
+{"time":"2025-04-21T10:17:42.311194512-04:00","level":"INFO","msg":"created new stream","id":"oglpbah0"}
+{"time":"2025-04-21T10:17:42.311256455-04:00","level":"INFO","msg":"stream: started","id":"oglpbah0"}
+{"time":"2025-04-21T10:17:42.31127352-04:00","level":"INFO","msg":"sender: started","stream_id":"oglpbah0"}
+{"time":"2025-04-21T10:17:42.311275794-04:00","level":"INFO","msg":"writer: Do: started","stream_id":"oglpbah0"}
+{"time":"2025-04-21T10:17:42.311267466-04:00","level":"INFO","msg":"handler: started","stream_id":"oglpbah0"}
+{"time":"2025-04-21T10:17:42.48150953-04:00","level":"INFO","msg":"Starting system monitor"}
+{"time":"2025-04-21T10:17:42.668526614-04:00","level":"INFO","msg":"Pausing system monitor"}
+{"time":"2025-04-21T10:17:42.668558747-04:00","level":"INFO","msg":"Resuming system monitor"}
+{"time":"2025-04-21T10:17:50.26192491-04:00","level":"ERROR","msg":"file transfer: upload: failed to upload: 400 Bad Request","task":"DefaultUploadTask{FileKind: 0, Path: /ocean/projects/cis250019p/gandotra/IDL_project/wandb/run-20250421_101742-oglpbah0/files/checkpoints/last_model.pth, Name: checkpoints/last_model.pth, Url: https://storage.googleapis.com/wandb-production.appspot.com/nayeshag-carnegie-mellon-university/IDL_final%20project%20PegasusNG/oglpbah0/checkpoints/last_model.pth?X-Goog-Algorithm=GOOG4-RSA-SHA256&X-Goog-Credential=gorilla-files-url-signer-man%40wandb-production.iam.gserviceaccount.com%2F20250421%2Fauto%2Fstorage%2Fgoog4_request&X-Goog-Date=20250421T141747Z&X-Goog-Expires=86399&X-Goog-Signature=4bed973852eaded8fc3618bac9549696388b58eb19b1c1b48213c9d0841625d4938cfb08a70b2e812a87b23ec1a5027ef6fa4815a9f90ce344d7d7bb87ec09bd9452eb76fa27c8ce8a0b30b5b851acb6dd5fe4e4de6a39f04196aa51cedc88f3e642cae52748c9f82721100cda4e622ec954ff6c534021e700f3b4d795812e80aeef565b8e1073ef1561c1919fb10cd83d6d12dc37e136c43d01f1b6a87be28b84714e08f5ab0d92634cc10464ed39a06fdfa956ba043c80ef8a4c6ec39cddb4d5fac6de05b628eb6098fa528c6fbe34a00f37d0c8197574e7cc0a97079ee8b9e55a0e9747a41f4ad8d046cb1ef7ecf64ead9bf8a625ee331bd6635d8a580e30&X-Goog-SignedHeaders=host&X-User=nayeshag, Size: 4151423}"}
+{"time":"2025-04-21T10:18:03.2568701-04:00","level":"INFO","msg":"Pausing system monitor"}
+{"time":"2025-04-21T10:18:03.298089709-04:00","level":"INFO","msg":"Resuming system monitor"}
+{"time":"2025-04-21T10:18:03.539327038-04:00","level":"INFO","msg":"Pausing system monitor"}
+{"time":"2025-04-21T10:23:48.771547144-04:00","level":"INFO","msg":"stream: closing","id":"oglpbah0"}
+{"time":"2025-04-21T10:23:48.771579147-04:00","level":"INFO","msg":"Stopping system monitor"}
+{"time":"2025-04-21T10:23:48.771645082-04:00","level":"INFO","msg":"Stopped system monitor"}
+{"time":"2025-04-21T10:23:49.53550882-04:00","level":"INFO","msg":"fileTransfer: Close: file transfer manager closed"}
+{"time":"2025-04-21T10:23:49.659721895-04:00","level":"INFO","msg":"handler: closed","stream_id":"oglpbah0"}
+{"time":"2025-04-21T10:23:49.659785908-04:00","level":"INFO","msg":"sender: closed","stream_id":"oglpbah0"}
+{"time":"2025-04-21T10:23:49.659786774-04:00","level":"INFO","msg":"writer: Close: closed","stream_id":"oglpbah0"}
+{"time":"2025-04-21T10:23:49.660016811-04:00","level":"INFO","msg":"stream: closed","id":"oglpbah0"}

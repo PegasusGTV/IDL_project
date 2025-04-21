@@ -1,0 +1,91 @@
+{
+  "os": "Linux-4.18.0-553.22.1.el8_10.x86_64-x86_64-with-glibc2.28",
+  "python": "CPython 3.12.4",
+  "startedAt": "2025-04-21T14:47:46.692691Z",
+  "program": "finpredictor-jvsc-031c427c-3107-4011-9e3e-5510cc1515b3f2cd2e00-242c-43eb-9b77-073337dc2fef.ipynb",
+  "git": {
+    "remote": "https://github.com/PegasusGTV/IDL_project.git",
+    "commit": "469ad694c2cb86b83949f041345ea12f16f955ca"
+  },
+  "email": "nayeshag@andrew.cmu.edu",
+  "root": "/ocean/projects/cis250019p/gandotra/IDL_project",
+  "host": "v023.ib.bridges2.psc.edu",
+  "executable": "/jet/home/psamal/hw_envs/idl_hw4/bin/python",
+  "cpu_count": 40,
+  "cpu_count_logical": 40,
+  "gpu": "Tesla V100-SXM2-32GB",
+  "gpu_count": 1,
+  "disk": {
+    "/": {
+      "total": "315926315008",
+      "used": "19351588864"
+    }
+  },
+  "memory": {
+    "total": "540673671168"
+  },
+  "cpu": {
+    "count": 40,
+    "countLogical": 40
+  },
+  "gpu_nvidia": [
+    {
+      "name": "Tesla V100-SXM2-32GB",
+      "memoryTotal": "34359738368",
+      "cudaCores": 5120,
+      "architecture": "Volta"
+    }
+  ],
+  "slurm": {
+    "cluster_name": "bridges2",
+    "conf": "/var/spool/slurm/d/conf-cache/slurm.conf",
+    "cpus_on_node": "5",
+    "export_env": "ALL",
+    "gpus_on_node": "1",
+    "gtids": "0",
+    "job_account": "cis250019p",
+    "job_cpus_per_node": "5",
+    "job_cpus_per_node_pack_group_0": "5",
+    "job_gid": "26783",
+    "job_gpus": "0",
+    "job_id": "30683397",
+    "job_name": "Interact",
+    "job_nodelist": "v023",
+    "job_num_nodes": "1",
+    "job_partition": "GPU-shared",
+    "job_qos": "gpuinteract",
+    "job_uid": "97061",
+    "job_user": "gandotra",
+    "jobid": "30683397",
+    "launch_node_ipaddr": "10.8.11.29",
+    "localid": "0",
+    "mpi_type": "none",
+    "nnodes": "1",
+    "node_aliases": "(null)",
+    "nodeid": "0",
+    "nodelist": "v023",
+    "prio_process": "0",
+    "procid": "0",
+    "pty_port": "39565",
+    "pty_win_col": "105",
+    "pty_win_row": "14",
+    "script_context": "prolog_task",
+    "srun_comm_host": "10.8.11.29",
+    "srun_comm_port": "45435",
+    "step_id": "4294967290",
+    "step_launcher_port": "45435",
+    "step_nodelist": "v023",
+    "step_num_nodes": "1",
+    "step_num_tasks": "1",
+    "step_tasks_per_node": "1",
+    "stepid": "4294967290",
+    "submit_dir": "/ocean/projects/cis250019p/gandotra/IDL_project",
+    "submit_host": "br011.ib.bridges2.psc.edu",
+    "task_pid": "34814",
+    "tasks_per_node": "5",
+    "topology_addr": "v023",
+    "topology_addr_pattern": "node",
+    "working_cluster": "bridges2:br003:6810:9728:109"
+  },
+  "cudaVersion": "12.6"
+}

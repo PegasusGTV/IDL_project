@@ -22,7 +22,8 @@ class FinancialTimeSeriesDataset(Dataset):
         split: Optional[str] = None,  # 'train' or 'val' or None (use full set)
         val_ratio: float = 0.2,
         shift: int = 2,  # NEW
-        scaler: Optional[object] = None,  # <-- new
+        tgt_scaler: Optional[object] = None, 
+        cls_scaler: Optional[object] = None, # <-- new
         fit_scaler: bool = False          # <-- new
     ):
         """
@@ -48,7 +49,8 @@ class FinancialTimeSeriesDataset(Dataset):
 
         self.split = split
         self.shift = shift
-        self.scaler = scaler
+        self.tgt_scaler = tgt_scaler
+        self.cls_scaler = cls_scaler
         self.fit_scaler = fit_scaler
 
         sequences = []
@@ -79,20 +81,30 @@ class FinancialTimeSeriesDataset(Dataset):
             # df['Time'] = (df['Time'] - df['Time'].min()) / (df['Time'].max() - df['Time'].min())
             # print(f"after resorting dataset is {df["Close"].head()}")
             df.columns = ['{}'.format(col[0]) for col in df.columns]
+            cls_features = [f for f in features if f != target]
+            print(cls_features)
+            
 
             if normalize:
                 scaler_cls = StandardScaler if normalize == 'zscore' else MinMaxScaler
+                scaler_tgt = StandardScaler() if normalize == 'zscore' else MinMaxScaler
                 if fit_scaler:
-                    self.scaler = scaler_cls()
-                    self.scaler.fit(df[features])
+                    self.tgt_scaler = scaler_tgt()
+                    self.cls_scaler = scaler_cls()
+                    self.cls_scaler.fit(df[cls_features])
+                    self.tgt_scaler.fit(df[[target]])
+                if self.tgt_scaler is not None:
+                    df[cls_features] = self.cls_scaler.transform(df[cls_features])
+                    df[[target]] = self.tgt_scaler.transform(df[[target]])
 
-                if self.scaler is not None:
-                    df[features] = self.scaler.transform(df[features])
+                    print(f"after normalization dataset is {df[cls_features].head()}")
+                    print(f"after normalization dataset is {df[target].head()}")
 
             # df = df.reset_index(drop=True)
             # print(f"after resorting dataset is {df[features].head()}")
             values = df.values
             target_idx = features.index(target)
+            print(df.columns)
             # print(f"values are {values}")
             # print(f"target is {df[features[target_idx]]}")
             # CHANGE THIS SO THAT WE ARE PREDICTING THE ENTIRE FEATURE SEQ, NOT JUST THE CLOSING PRICE
@@ -117,8 +129,6 @@ class FinancialTimeSeriesDataset(Dataset):
         self.targets = torch.stack(labels)      # [num_samples, forecast_horizon, 1]
         self.input_features = self.data.shape[-1]
         self.output_features = 1  # still predicting only one feature TODO un-hard code
-
-        print(self.data, self.targets)
 
 
     def __len__(self):

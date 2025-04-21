@@ -1,0 +1,26 @@
+{"time":"2025-04-21T10:52:21.724352802-04:00","level":"INFO","msg":"stream: starting","core version":"0.19.9","symlink path":"/ocean/projects/cis250019p/gandotra/IDL_project/wandb/run-20250421_105221-vads04ry/logs/debug-core.log"}
+{"time":"2025-04-21T10:52:21.944723125-04:00","level":"INFO","msg":"created new stream","id":"vads04ry"}
+{"time":"2025-04-21T10:52:21.944781552-04:00","level":"INFO","msg":"stream: started","id":"vads04ry"}
+{"time":"2025-04-21T10:52:21.944793214-04:00","level":"INFO","msg":"writer: Do: started","stream_id":"vads04ry"}
+{"time":"2025-04-21T10:52:21.944792546-04:00","level":"INFO","msg":"handler: started","stream_id":"vads04ry"}
+{"time":"2025-04-21T10:52:21.944801564-04:00","level":"INFO","msg":"sender: started","stream_id":"vads04ry"}
+{"time":"2025-04-21T10:52:22.062184448-04:00","level":"INFO","msg":"Starting system monitor"}
+{"time":"2025-04-21T10:52:22.250533915-04:00","level":"INFO","msg":"Pausing system monitor"}
+{"time":"2025-04-21T10:52:22.250570739-04:00","level":"INFO","msg":"Resuming system monitor"}
+{"time":"2025-04-21T10:52:30.524117721-04:00","level":"ERROR","msg":"file transfer: upload: failed to upload: 400 Bad Request","task":"DefaultUploadTask{FileKind: 0, Path: /ocean/projects/cis250019p/gandotra/IDL_project/wandb/run-20250421_105221-vads04ry/files/checkpoints/last_model.pth, Name: checkpoints/last_model.pth, Url: https://storage.googleapis.com/wandb-production.appspot.com/nayeshag-carnegie-mellon-university/IDL_final%20project%20PegasusNG/vads04ry/checkpoints/last_model.pth?X-Goog-Algorithm=GOOG4-RSA-SHA256&X-Goog-Credential=gorilla-files-url-signer-man%40wandb-production.iam.gserviceaccount.com%2F20250421%2Fauto%2Fstorage%2Fgoog4_request&X-Goog-Date=20250421T145230Z&X-Goog-Expires=86399&X-Goog-Signature=c204205243e944d6c3b050191ae9afe6bc7e73e41d86c8184f7ad2719df0ab27855053926a63880a2c169257e62a73c6e4f8eccc5e128dcb4cba1d58522d8bd5e296177d56dc14f6b67916e59b9aab5f660ffde9e0f28a87355a2ab31890e7f6ef7790019ee8371d4e97cf9a03e5af4a70efbcd7c85a7ffdd9ff4cd29575b5d74fc893a173572488747a23ae40fc0a8280352692b82fcebe0feb989e2d89cc431a329959c5f4d4a648d48a0b933d7f90d83561e58ec30c6da4b6ad008f869866f43914d926dc857ae1b53a687960f188d1755030add3c0b0cfed31556b8ca392ff36b502b80f4bf1f78f816656fb1392ea08a26ad9320572761bb926c46a19c1&X-Goog-SignedHeaders=host&X-User=nayeshag, Size: 4958349}"}
+{"time":"2025-04-21T10:52:34.743644614-04:00","level":"ERROR","msg":"file transfer: upload: failed to upload: 400 Bad Request","task":"DefaultUploadTask{FileKind: 0, Path: /ocean/projects/cis250019p/gandotra/IDL_project/wandb/run-20250421_105221-vads04ry/files/checkpoints/last_model.pth, Name: checkpoints/last_model.pth, Url: https://storage.googleapis.com/wandb-production.appspot.com/nayeshag-carnegie-mellon-university/IDL_final%20project%20PegasusNG/vads04ry/checkpoints/last_model.pth?X-Goog-Algorithm=GOOG4-RSA-SHA256&X-Goog-Credential=gorilla-files-url-signer-man%40wandb-production.iam.gserviceaccount.com%2F20250421%2Fauto%2Fstorage%2Fgoog4_request&X-Goog-Date=20250421T145234Z&X-Goog-Expires=86399&X-Goog-Signature=113384b2e798982ce1b78a9b773b61a0da3edcef480aab97281919d67e148e81003b8a645013e6ac5713c3405b01561b0f5d034656b27a6189a91ca1e418202c904a6e677da445e017610dbf520771156c26394a43ff0b2fc110dd7c52e9898325d11ba0f4baa26ebd4d568684652461a13a2bd534e6955865e85431494373976ec5b55970a36dc8366b69b00b0e8b8cc39776d7778002beefc1f8c6e6fbae69fff287df016af15c592dc86805e2b60db3e82506f3eea5dfd23dc891c29872ca12b3d5341e9fcb212a707426babc7eec1923da961ecbf45d94718ef5a99668dda3e4f09f66995319ddf22a9f1b027322614ee5051d2556d3baf2f55724b7e156&X-Goog-SignedHeaders=host&X-User=nayeshag, Size: 4959181}"}
+{"time":"2025-04-21T10:52:43.594857328-04:00","level":"INFO","msg":"Pausing system monitor"}
+{"time":"2025-04-21T10:52:43.646227616-04:00","level":"INFO","msg":"Resuming system monitor"}
+{"time":"2025-04-21T10:52:44.039675647-04:00","level":"INFO","msg":"Pausing system monitor"}
+{"time":"2025-04-21T11:01:30.911265516-04:00","level":"INFO","msg":"Resuming system monitor"}
+{"time":"2025-04-21T11:01:30.951477724-04:00","level":"INFO","msg":"Pausing system monitor"}
+{"time":"2025-04-21T11:01:30.951522375-04:00","level":"INFO","msg":"Resuming system monitor"}
+{"time":"2025-04-21T11:01:30.951532637-04:00","level":"INFO","msg":"Pausing system monitor"}
+{"time":"2025-04-21T11:01:30.951538617-04:00","level":"INFO","msg":"Resuming system monitor"}
+{"time":"2025-04-21T11:01:30.951544957-04:00","level":"INFO","msg":"Pausing system monitor"}
+{"time":"2025-04-21T11:01:31.315316774-04:00","level":"INFO","msg":"Resuming system monitor"}
+{"time":"2025-04-21T11:01:31.320641403-04:00","level":"INFO","msg":"Pausing system monitor"}
+{"time":"2025-04-21T11:01:32.485811117-04:00","level":"INFO","msg":"Resuming system monitor"}
+{"time":"2025-04-21T11:01:32.52644281-04:00","level":"INFO","msg":"Pausing system monitor"}
+{"time":"2025-04-21T11:01:36.014178466-04:00","level":"INFO","msg":"Resuming system monitor"}
+{"time":"2025-04-21T11:01:36.015302592-04:00","level":"INFO","msg":"Pausing system monitor"}

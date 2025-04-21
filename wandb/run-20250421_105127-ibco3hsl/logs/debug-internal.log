@@ -1,0 +1,20 @@
+{"time":"2025-04-21T10:51:27.3754217-04:00","level":"INFO","msg":"stream: starting","core version":"0.19.9","symlink path":"/ocean/projects/cis250019p/gandotra/IDL_project/wandb/run-20250421_105127-ibco3hsl/logs/debug-core.log"}
+{"time":"2025-04-21T10:51:27.595702323-04:00","level":"INFO","msg":"created new stream","id":"ibco3hsl"}
+{"time":"2025-04-21T10:51:27.595754303-04:00","level":"INFO","msg":"stream: started","id":"ibco3hsl"}
+{"time":"2025-04-21T10:51:27.595772311-04:00","level":"INFO","msg":"writer: Do: started","stream_id":"ibco3hsl"}
+{"time":"2025-04-21T10:51:27.595777337-04:00","level":"INFO","msg":"handler: started","stream_id":"ibco3hsl"}
+{"time":"2025-04-21T10:51:27.595782767-04:00","level":"INFO","msg":"sender: started","stream_id":"ibco3hsl"}
+{"time":"2025-04-21T10:51:27.837477844-04:00","level":"INFO","msg":"Starting system monitor"}
+{"time":"2025-04-21T10:51:27.988902855-04:00","level":"INFO","msg":"Pausing system monitor"}
+{"time":"2025-04-21T10:51:28.029531435-04:00","level":"INFO","msg":"Resuming system monitor"}
+{"time":"2025-04-21T10:51:48.859950772-04:00","level":"INFO","msg":"Pausing system monitor"}
+{"time":"2025-04-21T10:51:48.897128055-04:00","level":"INFO","msg":"Resuming system monitor"}
+{"time":"2025-04-21T10:51:49.286724294-04:00","level":"INFO","msg":"Pausing system monitor"}
+{"time":"2025-04-21T10:52:08.998873188-04:00","level":"INFO","msg":"stream: closing","id":"ibco3hsl"}
+{"time":"2025-04-21T10:52:08.998907356-04:00","level":"INFO","msg":"Stopping system monitor"}
+{"time":"2025-04-21T10:52:08.998941486-04:00","level":"INFO","msg":"Stopped system monitor"}
+{"time":"2025-04-21T10:52:09.628894944-04:00","level":"INFO","msg":"fileTransfer: Close: file transfer manager closed"}
+{"time":"2025-04-21T10:52:09.871262223-04:00","level":"INFO","msg":"handler: closed","stream_id":"ibco3hsl"}
+{"time":"2025-04-21T10:52:09.871280651-04:00","level":"INFO","msg":"sender: closed","stream_id":"ibco3hsl"}
+{"time":"2025-04-21T10:52:09.871279656-04:00","level":"INFO","msg":"writer: Close: closed","stream_id":"ibco3hsl"}
+{"time":"2025-04-21T10:52:09.871569853-04:00","level":"INFO","msg":"stream: closed","id":"ibco3hsl"}

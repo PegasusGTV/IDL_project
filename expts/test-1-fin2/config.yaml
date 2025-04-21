@@ -8,22 +8,22 @@ data:                    # Currently setup for Colab assuming out setup
   val_partition        : "val"    # val
   test_partition       : "test"   # test
   subset               : 1.0      # Load a subset of the data (for debugging, testing, etc
-  batch_size           : 256      #
+  batch_size           : 64      #
   NUM_WORKERS          : 2        # Set to 0 for CPU
-  forecast_horizon     : 5
+  forecast_horizon     : 1
 
 ###### Network Specs -------------------------------------------------------------
 model: # Decoder-Only Language Model (HW4P1)
-  d_model                   : 256
-  d_ff                      : 1024
+  d_model                   : 128
+  d_ff                      : 64
   d_freq                    : 3    #how many dimensions to split time into- must be odd because it adds 1?
   num_layers                : 2
-  num_heads                 : 2
-  dropout                   : 0.0
+  num_heads                 : 66
+  dropout                   : 0.4
 
 ###### Common Training Parameters ------------------------------------------------
 training:
-  use_wandb                   : False   # Toggle wandb logging
+  use_wandb                   : True   # Toggle wandb logging
   wandb_run_id                : "none" # "none" or "run_id"
   resume                      : False  # Resume an existing run (run_id != 'none')
   epochs                      : 10

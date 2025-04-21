@@ -1,0 +1,473 @@
+here!
+Training:   0%|                                                                                        | 0/17 [00:00<?, ?it/s]/jet/home/psamal/hw_envs/idl_hw4/lib/python3.12/site-packages/torchmetrics/utilities/prints.py:43: UserWarning: The ``compute`` method of metric MeanAbsoluteError was called before the ``update`` method which may lead to errors, as metric states have not yet been updated.
+  warnings.warn(*args, **kwargs)  # noqa: B028
+Training: 100%|███████████████████████████████████| 17/17 [00:00<00:00, 25.64it/s, batch_accuracy=6.43%, loss=0.3988, mae=nan]
+Logging metrics: {'epoch': 1, 'train': {'train_loss': 0.35536476527783356, 'train_mae': nan, 'train_accuracy': 3.783269961977186}}
+splitting train
+metrics {'train_loss': 0.35536476527783356, 'train_mae': nan, 'train_accuracy': 3.783269961977186}
+
+📈 Epoch 0 Metrics:
+  TRAIN      | train_loss: 0.3554 | train_mae: nan | train_accuracy: 3.7833
+[34m[1mwandb[0m: [33mWARNING[0m Saving files without folders. If you want to preserve subdirectories pass base_path to wandb.save, i.e. wandb.save("/mnt/folder/file.h5", base_path="/mnt")
+Training: 100%|███████████████████████████████████| 17/17 [00:00<00:00, 44.65it/s, batch_accuracy=5.71%, loss=0.6638, mae=nan]
+Logging metrics: {'epoch': 2, 'train': {'train_loss': 0.4206850816541752, 'train_mae': nan, 'train_accuracy': 4.163498098859316}}
+splitting train
+metrics {'train_loss': 0.4206850816541752, 'train_mae': nan, 'train_accuracy': 4.163498098859316}
+
+📈 Epoch 1 Metrics:
+  TRAIN      | train_loss: 0.4207 | train_mae: nan | train_accuracy: 4.1635
+Training: 100%|███████████████████████████████████| 17/17 [00:00<00:00, 44.80it/s, batch_accuracy=7.86%, loss=0.4703, mae=nan]
+Logging metrics: {'epoch': 3, 'train': {'train_loss': 0.33513964582305444, 'train_mae': nan, 'train_accuracy': 4.106463878326996}}
+splitting train
+metrics {'train_loss': 0.33513964582305444, 'train_mae': nan, 'train_accuracy': 4.106463878326996}
+
+📈 Epoch 2 Metrics:
+  TRAIN      | train_loss: 0.3351 | train_mae: nan | train_accuracy: 4.1065
+Training: 100%|███████████████████████████████████| 17/17 [00:00<00:00, 44.78it/s, batch_accuracy=7.86%, loss=0.4015, mae=nan]
+Logging metrics: {'epoch': 4, 'train': {'train_loss': 0.2828258977416804, 'train_mae': nan, 'train_accuracy': 3.897338403041825}}
+splitting train
+metrics {'train_loss': 0.2828258977416804, 'train_mae': nan, 'train_accuracy': 3.897338403041825}
+
+📈 Epoch 3 Metrics:
+  TRAIN      | train_loss: 0.2828 | train_mae: nan | train_accuracy: 3.8973
+Training: 100%|███████████████████████████████████| 17/17 [00:00<00:00, 44.64it/s, batch_accuracy=5.71%, loss=0.4009, mae=nan]
+Logging metrics: {'epoch': 5, 'train': {'train_loss': 0.28487752519632925, 'train_mae': nan, 'train_accuracy': 4.486692015209125}}
+splitting train
+metrics {'train_loss': 0.28487752519632925, 'train_mae': nan, 'train_accuracy': 4.486692015209125}
+
+📈 Epoch 4 Metrics:
+  TRAIN      | train_loss: 0.2849 | train_mae: nan | train_accuracy: 4.4867
+Training: 100%|███████████████████████████████████| 17/17 [00:00<00:00, 45.12it/s, batch_accuracy=2.86%, loss=0.4255, mae=nan]
+Logging metrics: {'epoch': 6, 'train': {'train_loss': 0.2554659173742447, 'train_mae': nan, 'train_accuracy': 4.277566539923955}}
+splitting train
+metrics {'train_loss': 0.2554659173742447, 'train_mae': nan, 'train_accuracy': 4.277566539923955}
+
+📈 Epoch 5 Metrics:
+  TRAIN      | train_loss: 0.2555 | train_mae: nan | train_accuracy: 4.2776
+Training: 100%|███████████████████████████████████| 17/17 [00:00<00:00, 45.07it/s, batch_accuracy=6.43%, loss=0.4196, mae=nan]
+Logging metrics: {'epoch': 7, 'train': {'train_loss': 0.24315035320506803, 'train_mae': nan, 'train_accuracy': 4.334600760456274}}
+splitting train
+metrics {'train_loss': 0.24315035320506803, 'train_mae': nan, 'train_accuracy': 4.334600760456274}
+
+📈 Epoch 6 Metrics:
+  TRAIN      | train_loss: 0.2432 | train_mae: nan | train_accuracy: 4.3346
+Training: 100%|███████████████████████████████████| 17/17 [00:00<00:00, 44.75it/s, batch_accuracy=9.29%, loss=0.3934, mae=nan]
+Logging metrics: {'epoch': 8, 'train': {'train_loss': 0.23950790180452877, 'train_mae': nan, 'train_accuracy': 4.600760456273764}}
+splitting train
+metrics {'train_loss': 0.23950790180452877, 'train_mae': nan, 'train_accuracy': 4.600760456273764}
+
+📈 Epoch 7 Metrics:
+  TRAIN      | train_loss: 0.2395 | train_mae: nan | train_accuracy: 4.6008
+Training: 100%|███████████████████████████████████| 17/17 [00:00<00:00, 44.76it/s, batch_accuracy=8.57%, loss=0.3392, mae=nan]
+Logging metrics: {'epoch': 9, 'train': {'train_loss': 0.2267670299390423, 'train_mae': nan, 'train_accuracy': 4.35361216730038}}
+splitting train
+metrics {'train_loss': 0.2267670299390423, 'train_mae': nan, 'train_accuracy': 4.35361216730038}
+
+📈 Epoch 8 Metrics:
+  TRAIN      | train_loss: 0.2268 | train_mae: nan | train_accuracy: 4.3536
+Training: 100%|███████████████████████████████████| 17/17 [00:00<00:00, 44.67it/s, batch_accuracy=8.57%, loss=0.3774, mae=nan]
+Logging metrics: {'epoch': 10, 'train': {'train_loss': 0.21360424500907782, 'train_mae': nan, 'train_accuracy': 4.258555133079848}}
+splitting train
+metrics {'train_loss': 0.21360424500907782, 'train_mae': nan, 'train_accuracy': 4.258555133079848}
+
+📈 Epoch 9 Metrics:
+  TRAIN      | train_loss: 0.2136 | train_mae: nan | train_accuracy: 4.2586
+Training: 100%|██████████████████████████████████| 17/17 [00:00<00:00, 44.73it/s, batch_accuracy=11.43%, loss=0.4080, mae=nan]
+Logging metrics: {'epoch': 11, 'train': {'train_loss': 0.2042519338004036, 'train_mae': nan, 'train_accuracy': 5.190114068441065}}
+splitting train
+metrics {'train_loss': 0.2042519338004036, 'train_mae': nan, 'train_accuracy': 5.190114068441065}
+
+📈 Epoch 10 Metrics:
+  TRAIN      | train_loss: 0.2043 | train_mae: nan | train_accuracy: 5.1901
+Training: 100%|██████████████████████████████████| 17/17 [00:00<00:00, 44.83it/s, batch_accuracy=12.14%, loss=0.3575, mae=nan]
+Logging metrics: {'epoch': 12, 'train': {'train_loss': 0.19635915597582046, 'train_mae': nan, 'train_accuracy': 4.866920152091255}}
+splitting train
+metrics {'train_loss': 0.19635915597582046, 'train_mae': nan, 'train_accuracy': 4.866920152091255}
+
+📈 Epoch 11 Metrics:
+  TRAIN      | train_loss: 0.1964 | train_mae: nan | train_accuracy: 4.8669
+Training: 100%|███████████████████████████████████| 17/17 [00:00<00:00, 44.99it/s, batch_accuracy=2.86%, loss=0.3926, mae=nan]
+Logging metrics: {'epoch': 13, 'train': {'train_loss': 0.18591381717090824, 'train_mae': nan, 'train_accuracy': 4.5437262357414445}}
+splitting train
+metrics {'train_loss': 0.18591381717090824, 'train_mae': nan, 'train_accuracy': 4.5437262357414445}
+
+📈 Epoch 12 Metrics:
+  TRAIN      | train_loss: 0.1859 | train_mae: nan | train_accuracy: 4.5437
+Training: 100%|███████████████████████████████████| 17/17 [00:00<00:00, 44.90it/s, batch_accuracy=4.29%, loss=0.3283, mae=nan]
+Logging metrics: {'epoch': 14, 'train': {'train_loss': 0.18881648688261954, 'train_mae': nan, 'train_accuracy': 4.239543726235741}}
+splitting train
+metrics {'train_loss': 0.18881648688261954, 'train_mae': nan, 'train_accuracy': 4.239543726235741}
+
+📈 Epoch 13 Metrics:
+  TRAIN      | train_loss: 0.1888 | train_mae: nan | train_accuracy: 4.2395
+Training: 100%|███████████████████████████████████| 17/17 [00:00<00:00, 44.85it/s, batch_accuracy=6.43%, loss=0.3550, mae=nan]
+Logging metrics: {'epoch': 15, 'train': {'train_loss': 0.17463494604984617, 'train_mae': nan, 'train_accuracy': 4.315589353612167}}
+splitting train
+metrics {'train_loss': 0.17463494604984617, 'train_mae': nan, 'train_accuracy': 4.315589353612167}
+
+📈 Epoch 14 Metrics:
+  TRAIN      | train_loss: 0.1746 | train_mae: nan | train_accuracy: 4.3156
+Training: 100%|███████████████████████████████████| 17/17 [00:00<00:00, 44.85it/s, batch_accuracy=5.00%, loss=0.3253, mae=nan]
+Logging metrics: {'epoch': 16, 'train': {'train_loss': 0.16560416359865165, 'train_mae': nan, 'train_accuracy': 4.334600760456274}}
+splitting train
+metrics {'train_loss': 0.16560416359865165, 'train_mae': nan, 'train_accuracy': 4.334600760456274}
+
+📈 Epoch 15 Metrics:
+  TRAIN      | train_loss: 0.1656 | train_mae: nan | train_accuracy: 4.3346
+Training: 100%|███████████████████████████████████| 17/17 [00:00<00:00, 44.49it/s, batch_accuracy=2.86%, loss=0.3110, mae=nan]
+Logging metrics: {'epoch': 17, 'train': {'train_loss': 0.15680051484488716, 'train_mae': nan, 'train_accuracy': 4.828897338403042}}
+splitting train
+metrics {'train_loss': 0.15680051484488716, 'train_mae': nan, 'train_accuracy': 4.828897338403042}
+
+📈 Epoch 16 Metrics:
+  TRAIN      | train_loss: 0.1568 | train_mae: nan | train_accuracy: 4.8289
+Training: 100%|███████████████████████████████████| 17/17 [00:00<00:00, 45.12it/s, batch_accuracy=2.14%, loss=0.3428, mae=nan]
+Logging metrics: {'epoch': 18, 'train': {'train_loss': 0.15809777492352764, 'train_mae': nan, 'train_accuracy': 4.562737642585551}}
+splitting train
+metrics {'train_loss': 0.15809777492352764, 'train_mae': nan, 'train_accuracy': 4.562737642585551}
+
+📈 Epoch 17 Metrics:
+  TRAIN      | train_loss: 0.1581 | train_mae: nan | train_accuracy: 4.5627
+Training: 100%|███████████████████████████████████| 17/17 [00:00<00:00, 44.79it/s, batch_accuracy=5.00%, loss=0.3012, mae=nan]
+Logging metrics: {'epoch': 19, 'train': {'train_loss': 0.150570974150538, 'train_mae': nan, 'train_accuracy': 4.638783269961977}}
+splitting train
+metrics {'train_loss': 0.150570974150538, 'train_mae': nan, 'train_accuracy': 4.638783269961977}
+
+📈 Epoch 18 Metrics:
+  TRAIN      | train_loss: 0.1506 | train_mae: nan | train_accuracy: 4.6388
+Training: 100%|███████████████████████████████████| 17/17 [00:00<00:00, 44.90it/s, batch_accuracy=2.14%, loss=0.2859, mae=nan]
+Logging metrics: {'epoch': 20, 'train': {'train_loss': 0.14591658081391917, 'train_mae': nan, 'train_accuracy': 4.467680608365019}}
+splitting train
+metrics {'train_loss': 0.14591658081391917, 'train_mae': nan, 'train_accuracy': 4.467680608365019}
+
+📈 Epoch 19 Metrics:
+  TRAIN      | train_loss: 0.1459 | train_mae: nan | train_accuracy: 4.4677
+Training: 100%|███████████████████████████████████| 17/17 [00:00<00:00, 44.72it/s, batch_accuracy=2.14%, loss=0.2591, mae=nan]
+Logging metrics: {'epoch': 21, 'train': {'train_loss': 0.14058770052380434, 'train_mae': nan, 'train_accuracy': 3.935361216730038}}
+splitting train
+metrics {'train_loss': 0.14058770052380434, 'train_mae': nan, 'train_accuracy': 3.935361216730038}
+
+📈 Epoch 20 Metrics:
+  TRAIN      | train_loss: 0.1406 | train_mae: nan | train_accuracy: 3.9354
+Training: 100%|███████████████████████████████████| 17/17 [00:00<00:00, 44.65it/s, batch_accuracy=3.57%, loss=0.2795, mae=nan]
+Logging metrics: {'epoch': 22, 'train': {'train_loss': 0.1354275494247335, 'train_mae': nan, 'train_accuracy': 4.220532319391635}}
+splitting train
+metrics {'train_loss': 0.1354275494247335, 'train_mae': nan, 'train_accuracy': 4.220532319391635}
+
+📈 Epoch 21 Metrics:
+  TRAIN      | train_loss: 0.1354 | train_mae: nan | train_accuracy: 4.2205
+Training: 100%|███████████████████████████████████| 17/17 [00:00<00:00, 44.63it/s, batch_accuracy=3.57%, loss=0.2819, mae=nan]
+Logging metrics: {'epoch': 23, 'train': {'train_loss': 0.13432170558338383, 'train_mae': nan, 'train_accuracy': 4.391634980988593}}
+splitting train
+metrics {'train_loss': 0.13432170558338383, 'train_mae': nan, 'train_accuracy': 4.391634980988593}
+
+📈 Epoch 22 Metrics:
+  TRAIN      | train_loss: 0.1343 | train_mae: nan | train_accuracy: 4.3916
+Training: 100%|███████████████████████████████████| 17/17 [00:00<00:00, 44.91it/s, batch_accuracy=1.43%, loss=0.2850, mae=nan]
+Logging metrics: {'epoch': 24, 'train': {'train_loss': 0.1285284715686914, 'train_mae': nan, 'train_accuracy': 4.67680608365019}}
+splitting train
+metrics {'train_loss': 0.1285284715686914, 'train_mae': nan, 'train_accuracy': 4.67680608365019}
+
+📈 Epoch 23 Metrics:
+  TRAIN      | train_loss: 0.1285 | train_mae: nan | train_accuracy: 4.6768
+Training: 100%|███████████████████████████████████| 17/17 [00:00<00:00, 44.78it/s, batch_accuracy=2.86%, loss=0.2402, mae=nan]
+Logging metrics: {'epoch': 25, 'train': {'train_loss': 0.12645768943621633, 'train_mae': nan, 'train_accuracy': 4.030418250950571}}
+splitting train
+metrics {'train_loss': 0.12645768943621633, 'train_mae': nan, 'train_accuracy': 4.030418250950571}
+
+📈 Epoch 24 Metrics:
+  TRAIN      | train_loss: 0.1265 | train_mae: nan | train_accuracy: 4.0304
+Training: 100%|███████████████████████████████████| 17/17 [00:00<00:00, 44.30it/s, batch_accuracy=2.86%, loss=0.2498, mae=nan]
+Logging metrics: {'epoch': 26, 'train': {'train_loss': 0.11979657349251069, 'train_mae': nan, 'train_accuracy': 4.505703422053232}}
+splitting train
+metrics {'train_loss': 0.11979657349251069, 'train_mae': nan, 'train_accuracy': 4.505703422053232}
+
+📈 Epoch 25 Metrics:
+  TRAIN      | train_loss: 0.1198 | train_mae: nan | train_accuracy: 4.5057
+Training: 100%|███████████████████████████████████| 17/17 [00:00<00:00, 44.72it/s, batch_accuracy=1.43%, loss=0.2576, mae=nan]
+Logging metrics: {'epoch': 27, 'train': {'train_loss': 0.11636011002181601, 'train_mae': nan, 'train_accuracy': 3.9923954372623576}}
+splitting train
+metrics {'train_loss': 0.11636011002181601, 'train_mae': nan, 'train_accuracy': 3.9923954372623576}
+
+📈 Epoch 26 Metrics:
+  TRAIN      | train_loss: 0.1164 | train_mae: nan | train_accuracy: 3.9924
+Training: 100%|███████████████████████████████████| 17/17 [00:00<00:00, 44.44it/s, batch_accuracy=2.14%, loss=0.2621, mae=nan]
+Logging metrics: {'epoch': 28, 'train': {'train_loss': 0.11431225012463762, 'train_mae': nan, 'train_accuracy': 3.840304182509506}}
+splitting train
+metrics {'train_loss': 0.11431225012463762, 'train_mae': nan, 'train_accuracy': 3.840304182509506}
+
+📈 Epoch 27 Metrics:
+  TRAIN      | train_loss: 0.1143 | train_mae: nan | train_accuracy: 3.8403
+Training: 100%|███████████████████████████████████| 17/17 [00:00<00:00, 44.90it/s, batch_accuracy=2.14%, loss=0.2653, mae=nan]
+Logging metrics: {'epoch': 29, 'train': {'train_loss': 0.11207363474051762, 'train_mae': nan, 'train_accuracy': 4.08745247148289}}
+splitting train
+metrics {'train_loss': 0.11207363474051762, 'train_mae': nan, 'train_accuracy': 4.08745247148289}
+
+📈 Epoch 28 Metrics:
+  TRAIN      | train_loss: 0.1121 | train_mae: nan | train_accuracy: 4.0875
+Training: 100%|███████████████████████████████████| 17/17 [00:00<00:00, 44.65it/s, batch_accuracy=0.71%, loss=0.2381, mae=nan]
+Logging metrics: {'epoch': 30, 'train': {'train_loss': 0.10940526550486968, 'train_mae': nan, 'train_accuracy': 3.935361216730038}}
+splitting train
+metrics {'train_loss': 0.10940526550486968, 'train_mae': nan, 'train_accuracy': 3.935361216730038}
+
+📈 Epoch 29 Metrics:
+  TRAIN      | train_loss: 0.1094 | train_mae: nan | train_accuracy: 3.9354
+Training: 100%|███████████████████████████████████| 17/17 [00:00<00:00, 44.95it/s, batch_accuracy=1.43%, loss=0.2476, mae=nan]
+Logging metrics: {'epoch': 31, 'train': {'train_loss': 0.10823381830984195, 'train_mae': nan, 'train_accuracy': 4.619771863117871}}
+splitting train
+metrics {'train_loss': 0.10823381830984195, 'train_mae': nan, 'train_accuracy': 4.619771863117871}
+
+📈 Epoch 30 Metrics:
+  TRAIN      | train_loss: 0.1082 | train_mae: nan | train_accuracy: 4.6198
+Training: 100%|███████████████████████████████████| 17/17 [00:00<00:00, 44.66it/s, batch_accuracy=2.86%, loss=0.2319, mae=nan]
+Logging metrics: {'epoch': 32, 'train': {'train_loss': 0.10351710984688747, 'train_mae': nan, 'train_accuracy': 4.600760456273764}}
+splitting train
+metrics {'train_loss': 0.10351710984688747, 'train_mae': nan, 'train_accuracy': 4.600760456273764}
+
+📈 Epoch 31 Metrics:
+  TRAIN      | train_loss: 0.1035 | train_mae: nan | train_accuracy: 4.6008
+Training: 100%|███████████████████████████████████| 17/17 [00:00<00:00, 44.63it/s, batch_accuracy=3.57%, loss=0.2307, mae=nan]
+Logging metrics: {'epoch': 33, 'train': {'train_loss': 0.09888796553638951, 'train_mae': nan, 'train_accuracy': 4.600760456273764}}
+splitting train
+metrics {'train_loss': 0.09888796553638951, 'train_mae': nan, 'train_accuracy': 4.600760456273764}
+
+📈 Epoch 32 Metrics:
+  TRAIN      | train_loss: 0.0989 | train_mae: nan | train_accuracy: 4.6008
+Training: 100%|███████████████████████████████████| 17/17 [00:00<00:00, 44.80it/s, batch_accuracy=2.14%, loss=0.2079, mae=nan]
+Logging metrics: {'epoch': 34, 'train': {'train_loss': 0.0981280505657196, 'train_mae': nan, 'train_accuracy': 3.821292775665399}}
+splitting train
+metrics {'train_loss': 0.0981280505657196, 'train_mae': nan, 'train_accuracy': 3.821292775665399}
+
+📈 Epoch 33 Metrics:
+  TRAIN      | train_loss: 0.0981 | train_mae: nan | train_accuracy: 3.8213
+Training: 100%|███████████████████████████████████| 17/17 [00:00<00:00, 44.63it/s, batch_accuracy=1.43%, loss=0.2190, mae=nan]
+Logging metrics: {'epoch': 35, 'train': {'train_loss': 0.09477366065117795, 'train_mae': nan, 'train_accuracy': 4.486692015209125}}
+splitting train
+metrics {'train_loss': 0.09477366065117795, 'train_mae': nan, 'train_accuracy': 4.486692015209125}
+
+📈 Epoch 34 Metrics:
+  TRAIN      | train_loss: 0.0948 | train_mae: nan | train_accuracy: 4.4867
+Training: 100%|███████████████████████████████████| 17/17 [00:00<00:00, 44.81it/s, batch_accuracy=0.71%, loss=0.1954, mae=nan]
+Logging metrics: {'epoch': 36, 'train': {'train_loss': 0.0938483790526372, 'train_mae': nan, 'train_accuracy': 4.524714828897339}}
+splitting train
+metrics {'train_loss': 0.0938483790526372, 'train_mae': nan, 'train_accuracy': 4.524714828897339}
+
+📈 Epoch 35 Metrics:
+  TRAIN      | train_loss: 0.0938 | train_mae: nan | train_accuracy: 4.5247
+Training: 100%|███████████████████████████████████| 17/17 [00:00<00:00, 44.90it/s, batch_accuracy=2.86%, loss=0.2007, mae=nan]
+Logging metrics: {'epoch': 37, 'train': {'train_loss': 0.09502695778476875, 'train_mae': nan, 'train_accuracy': 5.095057034220532}}
+splitting train
+metrics {'train_loss': 0.09502695778476875, 'train_mae': nan, 'train_accuracy': 5.095057034220532}
+
+📈 Epoch 36 Metrics:
+  TRAIN      | train_loss: 0.0950 | train_mae: nan | train_accuracy: 5.0951
+Training: 100%|███████████████████████████████████| 17/17 [00:00<00:00, 44.58it/s, batch_accuracy=3.57%, loss=0.1844, mae=nan]
+Logging metrics: {'epoch': 38, 'train': {'train_loss': 0.08630434817461007, 'train_mae': nan, 'train_accuracy': 5.342205323193916}}
+splitting train
+metrics {'train_loss': 0.08630434817461007, 'train_mae': nan, 'train_accuracy': 5.342205323193916}
+
+📈 Epoch 37 Metrics:
+  TRAIN      | train_loss: 0.0863 | train_mae: nan | train_accuracy: 5.3422
+Training: 100%|███████████████████████████████████| 17/17 [00:00<00:00, 44.52it/s, batch_accuracy=2.86%, loss=0.1675, mae=nan]
+Logging metrics: {'epoch': 39, 'train': {'train_loss': 0.0927459108058944, 'train_mae': nan, 'train_accuracy': 4.391634980988593}}
+splitting train
+metrics {'train_loss': 0.0927459108058944, 'train_mae': nan, 'train_accuracy': 4.391634980988593}
+
+📈 Epoch 38 Metrics:
+  TRAIN      | train_loss: 0.0927 | train_mae: nan | train_accuracy: 4.3916
+Training: 100%|███████████████████████████████████| 17/17 [00:00<00:00, 44.78it/s, batch_accuracy=1.43%, loss=0.1721, mae=nan]
+Logging metrics: {'epoch': 40, 'train': {'train_loss': 0.09207150731023274, 'train_mae': nan, 'train_accuracy': 4.847908745247148}}
+splitting train
+metrics {'train_loss': 0.09207150731023274, 'train_mae': nan, 'train_accuracy': 4.847908745247148}
+
+📈 Epoch 39 Metrics:
+  TRAIN      | train_loss: 0.0921 | train_mae: nan | train_accuracy: 4.8479
+Training: 100%|███████████████████████████████████| 17/17 [00:00<00:00, 44.92it/s, batch_accuracy=2.14%, loss=0.1923, mae=nan]
+Logging metrics: {'epoch': 41, 'train': {'train_loss': 0.08578262781235654, 'train_mae': nan, 'train_accuracy': 4.961977186311787}}
+splitting train
+metrics {'train_loss': 0.08578262781235654, 'train_mae': nan, 'train_accuracy': 4.961977186311787}
+
+📈 Epoch 40 Metrics:
+  TRAIN      | train_loss: 0.0858 | train_mae: nan | train_accuracy: 4.9620
+Training: 100%|███████████████████████████████████| 17/17 [00:00<00:00, 44.89it/s, batch_accuracy=2.14%, loss=0.1817, mae=nan]
+Logging metrics: {'epoch': 42, 'train': {'train_loss': 0.07605162098607184, 'train_mae': nan, 'train_accuracy': 5.4562737642585555}}
+splitting train
+metrics {'train_loss': 0.07605162098607184, 'train_mae': nan, 'train_accuracy': 5.4562737642585555}
+
+📈 Epoch 41 Metrics:
+  TRAIN      | train_loss: 0.0761 | train_mae: nan | train_accuracy: 5.4563
+Training: 100%|███████████████████████████████████| 17/17 [00:00<00:00, 44.96it/s, batch_accuracy=2.86%, loss=0.1610, mae=nan]
+Logging metrics: {'epoch': 43, 'train': {'train_loss': 0.07402910428128769, 'train_mae': nan, 'train_accuracy': 4.847908745247148}}
+splitting train
+metrics {'train_loss': 0.07402910428128769, 'train_mae': nan, 'train_accuracy': 4.847908745247148}
+
+📈 Epoch 42 Metrics:
+  TRAIN      | train_loss: 0.0740 | train_mae: nan | train_accuracy: 4.8479
+Training: 100%|███████████████████████████████████| 17/17 [00:00<00:00, 44.72it/s, batch_accuracy=4.29%, loss=0.1551, mae=nan]
+Logging metrics: {'epoch': 44, 'train': {'train_loss': 0.07293680451895347, 'train_mae': nan, 'train_accuracy': 5.171102661596958}}
+splitting train
+metrics {'train_loss': 0.07293680451895347, 'train_mae': nan, 'train_accuracy': 5.171102661596958}
+
+📈 Epoch 43 Metrics:
+  TRAIN      | train_loss: 0.0729 | train_mae: nan | train_accuracy: 5.1711
+Training: 100%|███████████████████████████████████| 17/17 [00:00<00:00, 44.49it/s, batch_accuracy=4.29%, loss=0.1527, mae=nan]
+Logging metrics: {'epoch': 45, 'train': {'train_loss': 0.07019043138725223, 'train_mae': nan, 'train_accuracy': 5.836501901140684}}
+splitting train
+metrics {'train_loss': 0.07019043138725223, 'train_mae': nan, 'train_accuracy': 5.836501901140684}
+
+📈 Epoch 44 Metrics:
+  TRAIN      | train_loss: 0.0702 | train_mae: nan | train_accuracy: 5.8365
+Training: 100%|███████████████████████████████████| 17/17 [00:00<00:00, 44.60it/s, batch_accuracy=3.57%, loss=0.1567, mae=nan]
+Logging metrics: {'epoch': 46, 'train': {'train_loss': 0.06850909506866687, 'train_mae': nan, 'train_accuracy': 6.1216730038022815}}
+splitting train
+metrics {'train_loss': 0.06850909506866687, 'train_mae': nan, 'train_accuracy': 6.1216730038022815}
+
+📈 Epoch 45 Metrics:
+  TRAIN      | train_loss: 0.0685 | train_mae: nan | train_accuracy: 6.1217
+Training: 100%|███████████████████████████████████| 17/17 [00:00<00:00, 44.93it/s, batch_accuracy=2.86%, loss=0.1347, mae=nan]
+Logging metrics: {'epoch': 47, 'train': {'train_loss': 0.0667461696233133, 'train_mae': nan, 'train_accuracy': 5.91254752851711}}
+splitting train
+metrics {'train_loss': 0.0667461696233133, 'train_mae': nan, 'train_accuracy': 5.91254752851711}
+
+📈 Epoch 46 Metrics:
+  TRAIN      | train_loss: 0.0667 | train_mae: nan | train_accuracy: 5.9125
+Training: 100%|███████████████████████████████████| 17/17 [00:00<00:00, 44.89it/s, batch_accuracy=3.57%, loss=0.1298, mae=nan]
+Logging metrics: {'epoch': 48, 'train': {'train_loss': 0.05881388802718754, 'train_mae': nan, 'train_accuracy': 6.787072243346008}}
+splitting train
+metrics {'train_loss': 0.05881388802718754, 'train_mae': nan, 'train_accuracy': 6.787072243346008}
+
+📈 Epoch 47 Metrics:
+  TRAIN      | train_loss: 0.0588 | train_mae: nan | train_accuracy: 6.7871
+Training: 100%|███████████████████████████████████| 17/17 [00:00<00:00, 44.77it/s, batch_accuracy=2.86%, loss=0.1428, mae=nan]
+Logging metrics: {'epoch': 49, 'train': {'train_loss': 0.058738935752966556, 'train_mae': nan, 'train_accuracy': 6.82509505703422}}
+splitting train
+metrics {'train_loss': 0.058738935752966556, 'train_mae': nan, 'train_accuracy': 6.82509505703422}
+
+📈 Epoch 48 Metrics:
+  TRAIN      | train_loss: 0.0587 | train_mae: nan | train_accuracy: 6.8251
+Training: 100%|███████████████████████████████████| 17/17 [00:00<00:00, 44.67it/s, batch_accuracy=6.43%, loss=0.1010, mae=nan]
+Logging metrics: {'epoch': 50, 'train': {'train_loss': 0.05638847825871674, 'train_mae': nan, 'train_accuracy': 7.642585551330798}}
+splitting train
+metrics {'train_loss': 0.05638847825871674, 'train_mae': nan, 'train_accuracy': 7.642585551330798}
+
+📈 Epoch 49 Metrics:
+  TRAIN      | train_loss: 0.0564 | train_mae: nan | train_accuracy: 7.6426
+here!
+Using device: cuda
+Overwriting config.yaml
+[*********************100%***********************]  1 of 1 completed
+['Open', 'High', 'Low', 'Volume']
+after normalization dataset is                 Open      High       Low    Volume
+Date
+2015-01-02  0.025063  0.022758  0.020406  0.289462
+2015-01-05  0.020931  0.019052  0.017820  0.361694
+2015-01-06  0.018598  0.017431  0.016780  0.371548
+2015-01-07  0.019477  0.018454  0.019540  0.204077
+2015-01-08  0.022184  0.023701  0.022206  0.329616
+after normalization dataset is Date
+2015-01-02    0.021795
+2015-01-05    0.017699
+2015-01-06    0.017712
+2015-01-07    0.019694
+2015-01-08    0.025199
+Name: Close, dtype: float64
+Index(['Open', 'High', 'Low', 'Close', 'Volume', 'Time'], dtype='object')
+Processing AAPL (train): 100%|█████████████████████████████████████████████████████████| 1064/1064 [00:00<00:00, 76656.98it/s]
+[*********************100%***********************]  1 of 1 completed
+['Open', 'High', 'Low', 'Volume']
+after normalization dataset is                 Open      High       Low    Volume
+Date
+2023-06-30  1.015151  1.026109  1.013786  0.081277
+2023-07-03  1.027925  1.022556  1.016757 -0.006091
+2023-07-05  1.014795  1.017228  1.009983  0.019107
+2023-07-06  1.004515  1.011545  1.001545  0.016131
+2023-07-07  1.013844  1.015393  1.007725  0.018875
+after normalization dataset is Date
+2023-06-30    1.025958
+2023-07-03    1.017009
+2023-07-05    1.010312
+2023-07-06    1.013157
+2023-07-07    1.006460
+Name: Close, dtype: float64
+Index(['Open', 'High', 'Low', 'Close', 'Volume', 'Time'], dtype='object')
+Processing AAPL (val): 100%|█████████████████████████████████████████████████████████████| 185/185 [00:00<00:00, 67432.54it/s]
+6 1
+First input sample (shape: torch.Size([5, 6])):
+tensor([[0.0251, 0.0228, 0.0204, 0.0218, 0.2895, 0.0000],
+        [0.0209, 0.0191, 0.0178, 0.0177, 0.3617, 1.0000],
+        [0.0186, 0.0174, 0.0168, 0.0177, 0.3715, 2.0000],
+        [0.0195, 0.0185, 0.0195, 0.0197, 0.2041, 3.0000],
+        [0.0222, 0.0237, 0.0222, 0.0252, 0.3296, 4.0000]])
+Corresponding target (shape: torch.Size([5, 1])):
+tensor([[0.0254],
+        [0.0217],
+        [0.0230],
+        [0.0224],
+        [0.0185]])
+Inputs: torch.Size([64, 5, 6])
+Targets: torch.Size([64, 5, 1])
+torch.Size([64, 5, 1])
+===============================================================================================
+Layer (type:depth-idx)                        Output Shape              Param #
+===============================================================================================
+TimeSeriesTransformer                         [64, 5, 1]                --
+├─Linear: 1-1                                 [64, 5, 128]              768
+├─GELU: 1-2                                   [64, 5, 128]              --
+├─Time2VecTorch: 1-3                          [64, 5, 4]                8
+├─TimeSeriesPositionalEncoding: 1-4           [64, 5, 132]              --
+├─Dropout: 1-5                                [64, 5, 132]              --
+├─Linear: 1-6                                 [64, 5, 128]              256
+├─Time2VecTorch: 1-7                          [64, 5, 4]                (recursive)
+├─TimeSeriesPositionalEncoding: 1-8           [64, 5, 132]              --
+├─Dropout: 1-9                                [64, 5, 132]              --
+├─TransformerDecoder: 1-10                    [64, 5, 132]              --
+│    └─ModuleList: 2-1                        --                        --
+│    │    └─TransformerDecoderLayer: 3-1      [64, 5, 132]              158,332
+│    │    └─TransformerDecoderLayer: 3-2      [64, 5, 132]              158,332
+├─LayerNorm: 1-11                             [64, 5, 132]              264
+├─Linear: 1-12                                [64, 5, 1]                133
+===============================================================================================
+Total params: 318,093
+Trainable params: 318,093
+Non-trainable params: 0
+Total mult-adds (Units.MEGABYTES): 2.38
+===============================================================================================
+Input size (MB): 0.01
+Forward/backward pass size (MB): 4.05
+Params size (MB): 0.15
+Estimated Total Size (MB): 4.20
+===============================================================================================
+[34m[1mwandb[0m: [33mWARNING[0m Calling wandb.login() after wandb.init() has no effect.
+True
+done with init!
+here!
+
+🔧 Configuring Optimizer:
+├── Type: ADAMW
+├── Base LR: 0.0005
+├── Weight Decay: 0.0001
+├── Parameter Groups:
+│   ├── Group: self_attn
+│   │   ├── LR: 0.0001
+│   │   └── Patterns: []
+│   ├── Group: ffn
+│   │   ├── LR: 0.0001
+│   │   └── Patterns: []
+│   └── Default Group (unmatched parameters)
+└── AdamW Specific:
+    ├── Betas: [0.9, 0.999]
+    ├── Epsilon: 1e-08
+    └── AMSGrad: False
+
+📈 Configuring Learning Rate Scheduler:
+├── Type: COSINE
+├── Cosine Annealing Settings:
+│   ├── T_max: 15 epochs (255 steps)
+│   └── Min LR: 1e-08
+├── Warmup Settings:
+│   ├── Duration: 5 epochs (85 steps)
+│   ├── Start Factor: 0.1
+│   └── End Factor: 1.0
+Warning: Only showing 5 out of 48 parameter groups for clarity
+/jet/home/psamal/hw_envs/idl_hw4/lib/python3.12/site-packages/torch/optim/lr_scheduler.py:240: UserWarning: The epoch parameter in `scheduler.step()` was not necessary and is being deprecated where possible. Please use `scheduler.step()` to step the scheduler. During the deprecation, if epoch is different from None, the closed form is used instead of the new chainable form, where available. Please open an issue if you are unable to replicate your use case: https://github.com/pytorch/pytorch/issues/new/choose.
+  warnings.warn(EPOCH_DEPRECATION_WARNING, UserWarning)

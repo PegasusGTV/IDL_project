@@ -1,0 +1,23 @@
+{"time":"2025-04-21T10:48:10.952006856-04:00","level":"INFO","msg":"stream: starting","core version":"0.19.9","symlink path":"/ocean/projects/cis250019p/gandotra/IDL_project/wandb/run-20250421_104810-32cj98pn/logs/debug-core.log"}
+{"time":"2025-04-21T10:48:11.134108812-04:00","level":"INFO","msg":"created new stream","id":"32cj98pn"}
+{"time":"2025-04-21T10:48:11.134163426-04:00","level":"INFO","msg":"stream: started","id":"32cj98pn"}
+{"time":"2025-04-21T10:48:11.134181208-04:00","level":"INFO","msg":"handler: started","stream_id":"32cj98pn"}
+{"time":"2025-04-21T10:48:11.134182931-04:00","level":"INFO","msg":"sender: started","stream_id":"32cj98pn"}
+{"time":"2025-04-21T10:48:11.134213666-04:00","level":"INFO","msg":"writer: Do: started","stream_id":"32cj98pn"}
+{"time":"2025-04-21T10:48:11.300230113-04:00","level":"INFO","msg":"Starting system monitor"}
+{"time":"2025-04-21T10:48:11.486489589-04:00","level":"INFO","msg":"Pausing system monitor"}
+{"time":"2025-04-21T10:48:11.486524375-04:00","level":"INFO","msg":"Resuming system monitor"}
+{"time":"2025-04-21T10:48:20.268380274-04:00","level":"ERROR","msg":"file transfer: upload: failed to upload: 400 Bad Request","task":"DefaultUploadTask{FileKind: 0, Path: /ocean/projects/cis250019p/gandotra/IDL_project/wandb/run-20250421_104810-32cj98pn/files/checkpoints/last_model.pth, Name: checkpoints/last_model.pth, Url: https://storage.googleapis.com/wandb-production.appspot.com/nayeshag-carnegie-mellon-university/IDL_final%20project%20PegasusNG/32cj98pn/checkpoints/last_model.pth?X-Goog-Algorithm=GOOG4-RSA-SHA256&X-Goog-Credential=gorilla-files-url-signer-man%40wandb-production.iam.gserviceaccount.com%2F20250421%2Fauto%2Fstorage%2Fgoog4_request&X-Goog-Date=20250421T144817Z&X-Goog-Expires=86399&X-Goog-Signature=2d17c024e9bf03735d6adf205712ce49c4fc893cb4650c37c1e4d3f1eeae80e413fc7a72a1f26fa4a6c98bc7649a2964b06e626934cddc5c9653834d09ff85429fd0702abdaca348ecc4add685af79d157a5709821a0dcec7d7211cd4aff6ca7554cc9d2acea73666d2f636bef4b4b056e38092e6f05b505b915ccf113f057b57fd4def237b4e477e6367725135f5ddcb83ec0fdba52594dd24b3a63dd641c168a798c229802fe62a5eafb3555d810b3b0d07df3e25af9f44ba8c924d276f4402e0bc7935b8101869489fe3a5fe40ae20f45f19058abea9556f357478b0b49fb4a0be40cb099361e0e32db29b3c0aaa33e7266c49154e284956e21c0c50b91b4&X-Goog-SignedHeaders=host&X-User=nayeshag, Size: 4148346}"}
+{"time":"2025-04-21T10:48:31.116066598-04:00","level":"INFO","msg":"Pausing system monitor"}
+{"time":"2025-04-21T10:48:31.163336702-04:00","level":"INFO","msg":"Resuming system monitor"}
+{"time":"2025-04-21T10:48:31.54287254-04:00","level":"INFO","msg":"Pausing system monitor"}
+{"time":"2025-04-21T10:48:31.649158686-04:00","level":"INFO","msg":"Resuming system monitor"}
+{"time":"2025-04-21T10:48:31.774476509-04:00","level":"INFO","msg":"Pausing system monitor"}
+{"time":"2025-04-21T10:49:22.455908077-04:00","level":"INFO","msg":"stream: closing","id":"32cj98pn"}
+{"time":"2025-04-21T10:49:22.455936428-04:00","level":"INFO","msg":"Stopping system monitor"}
+{"time":"2025-04-21T10:49:22.456006829-04:00","level":"INFO","msg":"Stopped system monitor"}
+{"time":"2025-04-21T10:49:23.094452731-04:00","level":"INFO","msg":"fileTransfer: Close: file transfer manager closed"}
+{"time":"2025-04-21T10:49:23.214652847-04:00","level":"INFO","msg":"handler: closed","stream_id":"32cj98pn"}
+{"time":"2025-04-21T10:49:23.214692109-04:00","level":"INFO","msg":"writer: Close: closed","stream_id":"32cj98pn"}
+{"time":"2025-04-21T10:49:23.214708125-04:00","level":"INFO","msg":"sender: closed","stream_id":"32cj98pn"}
+{"time":"2025-04-21T10:49:23.214909554-04:00","level":"INFO","msg":"stream: closed","id":"32cj98pn"}

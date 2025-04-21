@@ -27,23 +27,29 @@ class TimeSeriesForecastingTrainer(BaseTrainer):
         total_samples = 0   # For loss normalization
         batch_bar = tqdm(total=len(dataloader), desc="Training")
         
-        for batch_idx, (src, tgt) in enumerate(dataloader):
+        for batch_idx, (src, memory, tgt_shifted, tgt_golden) in enumerate(dataloader):
             src = src.to(self.device)
-            tgt = tgt.to(self.device)
+            tgt_shifted = tgt_shifted.to(self.device)
+            memory = memory.to(self.device)
+            tgt_golden = tgt_golden.to(self.device)
 
-            last_close = src[:, -1:, 3:4]  # Shape: [B, 1, 1]
-            naive_pred = last_close.repeat(1, self.forecast_horizon, 1)
-            naive_loss = self.loss_fn(naive_pred, tgt)
+            # last_close = src[:, -1:, 3:4]  # Shape: [B, 1, 1]
+            # naive_pred = last_close.repeat(1, self.forecast_horizon, 1)
+            # naive_loss = self.loss_fn(naive_pred, tgt_golden)
+            # print(naive_loss)
             # print(src.shape)
             # print(tgt.shape)
             
             self.optimizer.zero_grad()
             
             with torch.autocast(device_type=self.device, dtype=torch.float16):
-                predictions = self.model(src)
+                predictions = self.model(memory, tgt_shifted)
                 # print(f"train predictions are {predictions[0]}")
-                # print(f"train targets are {tgt[0]}")
-                loss = self.loss_fn(predictions, tgt)
+                print(f"train targets are {tgt_golden.shape}")
+                print(f"train predictions are {predictions.shape}")
+                print(f"train src are {src.shape}")
+                print(f"train memory are {memory.shape}")
+                loss = self.loss_fn(predictions, tgt_golden)
             
             # Gradient accumulation
             loss = loss / self.config['training']['gradient_accumulation_steps']
@@ -60,7 +66,7 @@ class TimeSeriesForecastingTrainer(BaseTrainer):
             total_samples += src.size(0)
             
             # Accuracy calculation
-            pct_error = torch.abs(predictions - tgt) / (torch.abs(tgt) + 1e-8)
+            pct_error = torch.abs(predictions - tgt_golden) / (torch.abs(tgt_golden) + 1e-8)
             total_correct += (pct_error <= 0.1).sum().item()
             total_elements += predictions.numel()
             
@@ -95,20 +101,22 @@ class TimeSeriesForecastingTrainer(BaseTrainer):
         all_targets = []
 
         with torch.no_grad():
-            for src, tgt in dataloader:
+            for src, memory, tgt_shifted, tgt_golden in dataloader:
                 src = src.to(self.device)
-                tgt = tgt.to(self.device)
+                tgt_shifted = tgt_shifted.to(self.device)
+                memory = memory.to(self.device)
+                tgt_golden = tgt_golden.to(self.device)
                 
-                predictions = self.model(src)
+                predictions = self.model(memory, tgt_shifted)
                 # print(f"val predictions are {predictions[0]}")
                 # print(f"val targets are {tgt[0]}")
-                loss = self.loss_fn(predictions, tgt)
+                loss = self.loss_fn(predictions, tgt_golden)
                 
                 total_loss += loss.item() * src.size(0)
-                mae_metric.update(predictions, tgt)
+                mae_metric.update(predictions, tgt_golden)
 
                 all_preds.append(predictions.detach().cpu())
-                all_targets.append(tgt.detach().cpu())
+                all_targets.append(tgt_golden.detach().cpu())
         
         # Concatenate all batches
         all_preds = torch.cat(all_preds, dim=0).numpy().reshape(-1, 1)

@@ -54,7 +54,9 @@ class FinancialTimeSeriesDataset(Dataset):
         self.fit_scaler = fit_scaler
 
         sequences = []
-        labels = []
+        labels_shifted = []
+        labels_shifted_targfeat = []
+        labels_golden = []
 
        
 
@@ -87,7 +89,7 @@ class FinancialTimeSeriesDataset(Dataset):
 
             if normalize:
                 scaler_cls = StandardScaler if normalize == 'zscore' else MinMaxScaler
-                scaler_tgt = StandardScaler() if normalize == 'zscore' else MinMaxScaler
+                scaler_tgt = StandardScaler if normalize == 'zscore' else MinMaxScaler
                 if fit_scaler:
                     self.tgt_scaler = scaler_tgt()
                     self.cls_scaler = scaler_cls()
@@ -105,28 +107,45 @@ class FinancialTimeSeriesDataset(Dataset):
             values = df.values
             target_idx = features.index(target)
             print(df.columns)
-            # print(f"values are {values}")
-            # print(f"target is {df[features[target_idx]]}")
-            # CHANGE THIS SO THAT WE ARE PREDICTING THE ENTIRE FEATURE SEQ, NOT JUST THE CLOSING PRICE
 
+            # Inside your for-loop where you process each time window
             for i in tqdm(
                 range(0, len(values) - window_size - forecast_horizon + 1, shift),
                 desc=f"Processing {ticker} ({split or 'full'})"
             ):
-                window = values[i:i + window_size]
-                label_seq = values[i + window_size:i + window_size + forecast_horizon, target_idx]
+                x = values[i:i + window_size]  # Input sequence (past window)
+                print(f"x is {x.shape}")
+
+                # # Create shifted and golden targets
+                if i == 0:
+                    # For the first window, there is no previous input, so replicate the first row
+                    targets_shifted = np.vstack((x[0], x[:-1]))  # [window_size, num_features]
+                else:
+                    # Use the last row of the previous window as the first row of the shifted targets
+                    targets_shifted = np.vstack((values[i - 1 + window_size - 1], x[:-1]))  # [window_size, num_features]
+
+                print(f"targets_shifted is {targets_shifted.shape}")
+                targets_shifted_targfeat = targets_shifted[:, target_idx:target_idx + 1]  # [window_size, 1]
+                targets_golden = x[:, target_idx]  # [window_size]
                 
-                # DEBUG:
-                # print(window)
-                # print(label_seq)
 
-                label_seq = torch.tensor(label_seq, dtype=torch.float32).unsqueeze(-1)  # [forecast_horizon, 1]
+                # Convert to PyTorch tensors (no flattening anymore!)
+                targets_shifted = torch.tensor(targets_shifted, dtype=torch.float32)                # [window_size, num_features]
+                targets_shifted_targfeat = torch.tensor(targets_shifted_targfeat, dtype=torch.float32)  # [window_size, 1]
+                targets_golden = torch.tensor(targets_golden, dtype=torch.float32).unsqueeze(-1)       # [window_size, 1]
+                print(f"targets_golden is {targets_golden.shape}")
+                
+                sequences.append(torch.tensor(x, dtype=torch.float32))  # [window_size, num_features]
+                labels_shifted.append(targets_shifted)                  # [window_size, num_features]
+                labels_shifted_targfeat.append(targets_shifted_targfeat)  # [window_size, 1]
+                labels_golden.append(targets_golden)                       # [window_size, 1]
 
-                sequences.append(torch.tensor(window, dtype=torch.float32))  # [window_size, input_features]
-                labels.append(label_seq)                                     # [forecast_horizon, 1]
 
-        self.data = torch.stack(sequences)      # [num_samples, window_size, input_features]
-        self.targets = torch.stack(labels)      # [num_samples, forecast_horizon, 1]
+
+        self.data = torch.stack(sequences)                        # [N, window_size, input_features]
+        self.targets_shifted = torch.stack(labels_shifted)        # [N, window_size, input_features]
+        self.targets_shifted_targfeat = torch.stack(labels_shifted_targfeat)  # [N, window_size, 1]
+        self.targets = torch.stack(labels_golden)                 # [N, window_size, 1]
         self.input_features = self.data.shape[-1]
         self.output_features = 1  # still predicting only one feature TODO un-hard code
 
@@ -134,11 +153,12 @@ class FinancialTimeSeriesDataset(Dataset):
     def __len__(self):
         return len(self.data)
 
-    def __getitem__(self, idx: int) -> Tuple[torch.Tensor, torch.Tensor]:
+    def __getitem__(self, idx: int) -> Tuple[torch.Tensor, Tuple[torch.Tensor, torch.Tensor]]:
         """
         Returns:
-            Tuple[Tensor, Tensor]: (past_window, future_targets)
+            Tuple[Tensor, Tuple[Tensor, Tensor]]: (past_window, (shifted_targets, golden_targets))
                 - past_window: shape [window_size, num_features]
-                - future_targets: shape [forecast_horizon]
+                - shifted_targets: shape [window_size, num_features]
+                - golden_targets: shape [window_size + forecast_horizon, num_features]
         """
-        return self.data[idx], self.targets[idx]
+        return self.data[idx], self.targets_shifted[idx], self.targets_shifted_targfeat[idx], self.targets[idx]

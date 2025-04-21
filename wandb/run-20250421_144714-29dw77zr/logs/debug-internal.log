@@ -1,0 +1,28 @@
+{"time":"2025-04-21T14:47:14.364862666-04:00","level":"INFO","msg":"stream: starting","core version":"0.19.9","symlink path":"/ocean/projects/cis250019p/gandotra/IDL_project/wandb/run-20250421_144714-29dw77zr/logs/debug-core.log"}
+{"time":"2025-04-21T14:47:14.59469298-04:00","level":"INFO","msg":"created new stream","id":"29dw77zr"}
+{"time":"2025-04-21T14:47:14.594759842-04:00","level":"INFO","msg":"stream: started","id":"29dw77zr"}
+{"time":"2025-04-21T14:47:14.594778754-04:00","level":"INFO","msg":"handler: started","stream_id":"29dw77zr"}
+{"time":"2025-04-21T14:47:14.594780753-04:00","level":"INFO","msg":"sender: started","stream_id":"29dw77zr"}
+{"time":"2025-04-21T14:47:14.594794684-04:00","level":"INFO","msg":"writer: Do: started","stream_id":"29dw77zr"}
+{"time":"2025-04-21T14:47:14.726926132-04:00","level":"INFO","msg":"Starting system monitor"}
+{"time":"2025-04-21T14:47:14.935431727-04:00","level":"INFO","msg":"Pausing system monitor"}
+{"time":"2025-04-21T14:47:15.009345441-04:00","level":"INFO","msg":"Resuming system monitor"}
+{"time":"2025-04-21T14:47:15.240765852-04:00","level":"INFO","msg":"Pausing system monitor"}
+{"time":"2025-04-21T14:48:08.061317769-04:00","level":"INFO","msg":"Resuming system monitor"}
+{"time":"2025-04-21T14:48:08.102313227-04:00","level":"INFO","msg":"Pausing system monitor"}
+{"time":"2025-04-21T14:48:08.145354188-04:00","level":"INFO","msg":"Resuming system monitor"}
+{"time":"2025-04-21T14:48:08.148796045-04:00","level":"INFO","msg":"Pausing system monitor"}
+{"time":"2025-04-21T14:48:08.231997036-04:00","level":"INFO","msg":"Resuming system monitor"}
+{"time":"2025-04-21T14:48:08.238920767-04:00","level":"INFO","msg":"Pausing system monitor"}
+{"time":"2025-04-21T14:48:08.297868286-04:00","level":"INFO","msg":"Resuming system monitor"}
+{"time":"2025-04-21T14:48:08.298393513-04:00","level":"INFO","msg":"Pausing system monitor"}
+{"time":"2025-04-21T14:48:08.327995874-04:00","level":"INFO","msg":"Resuming system monitor"}
+{"time":"2025-04-21T14:48:08.417662968-04:00","level":"INFO","msg":"Pausing system monitor"}
+{"time":"2025-04-21T14:48:27.900706344-04:00","level":"INFO","msg":"stream: closing","id":"29dw77zr"}
+{"time":"2025-04-21T14:48:27.900753162-04:00","level":"INFO","msg":"Stopping system monitor"}
+{"time":"2025-04-21T14:48:27.900839078-04:00","level":"INFO","msg":"Stopped system monitor"}
+{"time":"2025-04-21T14:48:28.232206906-04:00","level":"INFO","msg":"fileTransfer: Close: file transfer manager closed"}
+{"time":"2025-04-21T14:48:28.361242741-04:00","level":"INFO","msg":"handler: closed","stream_id":"29dw77zr"}
+{"time":"2025-04-21T14:48:28.361308252-04:00","level":"INFO","msg":"sender: closed","stream_id":"29dw77zr"}
+{"time":"2025-04-21T14:48:28.361301115-04:00","level":"INFO","msg":"writer: Close: closed","stream_id":"29dw77zr"}
+{"time":"2025-04-21T14:48:28.363939977-04:00","level":"INFO","msg":"stream: closed","id":"29dw77zr"}

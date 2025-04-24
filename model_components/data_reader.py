@@ -7,6 +7,99 @@ from datetime import datetime
 from tqdm import tqdm
 from sklearn.preprocessing import MinMaxScaler, StandardScaler
 
+# Helper functions for feature calculations
+import pandas as pd
+import numpy as np
+
+def compute_sma(df, column, window):
+    """
+    Compute Simple Moving Average (SMA).
+    
+    Args:
+        df (pd.DataFrame): Input DataFrame.
+        column (str): Column name to calculate SMA on.
+        window (int): Window size for moving average.
+    
+    Returns:
+        pd.Series: SMA values.
+    """
+    if column not in df.columns:
+        raise ValueError(f"Column '{column}' not found in DataFrame.")
+    return df[column].rolling(window=window, min_periods=1).mean()
+
+
+def compute_rsi(df, column, window=14):
+    """
+    Compute Relative Strength Index (RSI).
+    
+    Args:
+        df (pd.DataFrame): Input DataFrame.
+        column (str): Column name to calculate RSI on.
+        window (int): Period over which to compute RSI.
+    
+    Returns:
+        pd.Series: RSI values.
+    """
+    if column not in df.columns:
+        raise ValueError(f"Column '{column}' not found in DataFrame.")
+    
+    # Make sure it's a 1D Series, not DataFrame
+    series = df[column]
+
+    delta = series.diff()
+    gain = delta.where(delta > 0, 0)
+    loss = -delta.where(delta < 0, 0)
+
+    avg_gain = gain.rolling(window=window, min_periods=1).mean()
+    avg_loss = loss.rolling(window=window, min_periods=1).mean()
+
+    rs = avg_gain / (avg_loss + 1e-8)
+    rsi = 100 - (100 / (1 + rs))
+
+    return rsi
+
+
+def compute_halftrend(df, high_col='High', low_col='Low', close_col='Close', window=20):
+    """
+    Compute Half-Trend indicator (basic but closer to true version).
+    
+    Args:
+        df (pd.DataFrame): DataFrame with High, Low, Close columns.
+        high_col (str): Column name for high prices.
+        low_col (str): Column name for low prices.
+        close_col (str): Column name for close prices.
+        window (int): Window for trend smoothing and logic.
+    
+    Returns:
+        pd.Series: Half-Trend signal (+1 for uptrend, -1 for downtrend).
+    """
+    if not all(col in df.columns for col in [high_col, low_col, close_col]):
+        raise ValueError("Missing required columns.")
+
+    hl2 = (df[high_col] + df[low_col]) / 2
+
+    # Smoothed version of hl2
+    avg_price = hl2.rolling(window=window, min_periods=1).mean()
+
+    direction = np.zeros(len(df))
+    trend = np.zeros(len(df))
+
+    # Initial direction
+    for i in range(1, len(df)):
+        # Compare the close price to the smoothed average
+        if df[close_col].iloc[i].item() > avg_price.iloc[i - 1].item():
+            direction[i] = 1
+        elif df[close_col].iloc[i].item() < avg_price.iloc[i - 1].item():
+            direction[i] = -1
+        else:
+            direction[i] = direction[i - 1]  # maintain previous direction
+
+        # Store trend for visualization or later use
+        trend[i] = direction[i]
+
+    return pd.Series(trend, index=df.index, name='HalfTrend')
+
+
 
 class FinancialTimeSeriesDataset(Dataset):
     def __init__(
@@ -63,6 +156,11 @@ class FinancialTimeSeriesDataset(Dataset):
         for ticker in tickers:
             df = yf.download(ticker, start=start_date, end=end_date)[features]
             df = df.dropna()
+            
+            # Add additional features
+            # df['SMA_10'] = compute_sma(df, 'Close', window=10)
+            # df['RSI_14'] = compute_rsi(df, 'Close', window=14)
+            df['HalfTrend_20'] = compute_halftrend(df)
             # print(f"initial dataset is {df.head()}")
             # print(f"df columns are {df.columns}")
             # df['Time'] = (df.index - df.index.min()).days
@@ -74,10 +172,10 @@ class FinancialTimeSeriesDataset(Dataset):
             # Split into train/val if requested
             train_end_idx = int(len(df) * (1 - val_ratio))
 
-            if split == 'train':
-                df = df.iloc[:train_end_idx]
-            elif split == 'val':
-                df = df.iloc[train_end_idx:]
+            # if split == 'train':
+            #     df = df.iloc[:train_end_idx]
+            # elif split == 'val':
+            #     df = df.iloc[train_end_idx:]
            
             # Add normalized time feature
             # df['Time'] = (df['Time'] - df['Time'].min()) / (df['Time'].max() - df['Time'].min())
@@ -102,6 +200,12 @@ class FinancialTimeSeriesDataset(Dataset):
                     print(f"after normalization dataset is {df[cls_features].head()}")
                     print(f"after normalization dataset is {df[target].head()}")
 
+            if split == 'train':
+                df = df.iloc[:train_end_idx]
+            elif split == 'val':
+                df = df.iloc[train_end_idx:]
+           
+
             # df = df.reset_index(drop=True)
             # print(f"after resorting dataset is {df[features].head()}")
             values = df.values
@@ -114,7 +218,7 @@ class FinancialTimeSeriesDataset(Dataset):
                 desc=f"Processing {ticker} ({split or 'full'})"
             ):
                 x = values[i:i + window_size]  # Input sequence (past window)
-                print(f"x is {x.shape}")
+                # print(f"x is {x.shape}")
 
                 # # Create shifted and golden targets
                 if i == 0:
@@ -124,7 +228,7 @@ class FinancialTimeSeriesDataset(Dataset):
                     # Use the last row of the previous window as the first row of the shifted targets
                     targets_shifted = np.vstack((values[i - 1 + window_size - 1], x[:-1]))  # [window_size, num_features]
 
-                print(f"targets_shifted is {targets_shifted.shape}")
+                # print(f"targets_shifted is {targets_shifted.shape}")
                 targets_shifted_targfeat = targets_shifted[:, target_idx:target_idx + 1]  # [window_size, 1]
                 targets_golden = x[:, target_idx]  # [window_size]
                 
@@ -133,7 +237,7 @@ class FinancialTimeSeriesDataset(Dataset):
                 targets_shifted = torch.tensor(targets_shifted, dtype=torch.float32)                # [window_size, num_features]
                 targets_shifted_targfeat = torch.tensor(targets_shifted_targfeat, dtype=torch.float32)  # [window_size, 1]
                 targets_golden = torch.tensor(targets_golden, dtype=torch.float32).unsqueeze(-1)       # [window_size, 1]
-                print(f"targets_golden is {targets_golden.shape}")
+                # print(f"targets_golden is {targets_golden.shape}")
                 
                 sequences.append(torch.tensor(x, dtype=torch.float32))  # [window_size, num_features]
                 labels_shifted.append(targets_shifted)                  # [window_size, num_features]

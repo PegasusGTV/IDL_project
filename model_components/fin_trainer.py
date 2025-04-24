@@ -8,11 +8,80 @@ from sklearn.metrics import mean_squared_error
 import numpy as np
 import matplotlib.pyplot as plt
 
+class HybridLoss(nn.Module):
+    def __init__(self, init_w1=1.0, init_w2=0.1):
+        super(HybridLoss, self).__init__()
+        self.mse_loss = nn.MSELoss()
+        self.w1 = torch.nn.functional.softplus(nn.Parameter(torch.tensor(init_w1, dtype=torch.float32)))
+        self.w2 = torch.nn.functional.softplus(nn.Parameter(torch.tensor(init_w2, dtype=torch.float32)))
+        self.epsilon = 1e-8  # Small value to avoid division by zero
+
+    
+    def forward(self, predictions, targets, tgt_shifted):
+        """
+        Hybrid loss function combining MSE and Additive Brownian Motion regularization.
+        Args:
+            predictions (torch.Tensor): Model predictions of shape [B, T, D].
+            targets (torch.Tensor): True target values of shape [B, total_len].
+            tgt_shifted (torch.Tensor): Shifted target values for training.
+        Returns:
+            torch.Tensor: Computed hybrid loss.
+        """
+        # Mean Squared Error Loss
+        mse_loss = self.mse_loss(predictions, targets)
+
+        # Additive Brownian Motion Regularization
+        # returns = (targets - tgt_shifted)  # Shape: [B, T]
+        mu = targets.mean(dim=1, keepdim=True)  # [B, 1]
+        # print(f"mu shape is {mu}")
+        sigma = targets.std(dim=1, keepdim=True)  # [B, 1]
+        # print(f"sigma shape is {sigma}")
+
+        B, T, D = predictions.shape
+
+        # Time vector and Wiener process (cumulative Gaussian noise)
+        time_vector = torch.arange(T, device=predictions.device).float().unsqueeze(1)  # [T, 1]
+        # print(f"time_vector shape is {time_vector}")
+        dt = 1.0  # time step (could be made configurable)
+        
+        # Sample Wiener process: W(t) ~ N(0, t)
+        # So increments are sqrt(dt) * N(0, 1)
+        dW = torch.randn(B, T, 1, device=predictions.device) * (dt ** 0.5)  # [B, T, 1]
+        # print(f"dW shape is {dW}")
+
+        # Brownian path: cumulative sum of dW along the time dimension
+        W_t = torch.cumsum(dW, dim=1)  # [B, T, 1]
+        # print(f"W_t shape is {W_t}")
+
+        # ABM path: X(0) + mu * t + sigma * W(t)
+        X_0 = tgt_shifted  # [B, 1]
+        # print(f"X_0 shape is {X_0.shape}")
+        mu_term = mu * time_vector  # [B, T]
+        # print(f"mu_term shape is {mu_term}")
+        sigma_term = sigma * W_t  # [B, T]
+        # print(f"sigma_term shape is {sigma_term}")
+        abm_path = X_0 + mu_term + sigma_term  # [B, T]
+        # print(f"abm_path shape is {abm_path}")
+
+        # Match prediction dimensions (assuming [B, T, 1])
+        abm_loss = torch.mean((predictions - abm_path) ** 2)
+
+        print(f"mse_loss is {mse_loss}")
+        print(f"abm_loss is {abm_loss}")
+
+        # Total loss
+        # loss = self.w1*mse_loss + self.w2 * abm_loss
+        loss = self.w1.detach() * mse_loss + self.w2.detach() * abm_loss
+        return loss
+
+
+
 
 class TimeSeriesForecastingTrainer(BaseTrainer):
     def __init__(self, model, config, run_name, config_file, scaler, device=None):
         super().__init__(model, config, run_name, config_file, device)
-        self.loss_fn = nn.MSELoss()
+        # self.loss_fn = nn.MSELoss()
+        self.loss_fn = HybridLoss(init_w1 = 0.0, init_w2 = 1.0).to(device)
         # default reduction- aceraging v/s summing 
         self.mae_metric = torchmetrics.MeanAbsoluteError().to(device)
         self.forecast_horizon = model.forecast_horizon
@@ -45,15 +114,15 @@ class TimeSeriesForecastingTrainer(BaseTrainer):
             with torch.autocast(device_type=self.device, dtype=torch.float16):
                 predictions = self.model(memory, tgt_shifted)
                 # print(f"train predictions are {predictions[0]}")
-                print(f"train targets are {tgt_golden.shape}")
-                print(f"train predictions are {predictions.shape}")
-                print(f"train src are {src.shape}")
-                print(f"train memory are {memory.shape}")
-                loss = self.loss_fn(predictions, tgt_golden)
+                # print(f"train targets are {tgt_golden.shape}")
+                # print(f"train predictions are {predictions.shape}")
+                # print(f"train src are {src.shape}")
+                # print(f"train memory are {memory.shape}")
+                loss = self.loss_fn(predictions, tgt_golden, tgt_shifted)
             
             # Gradient accumulation
             loss = loss / self.config['training']['gradient_accumulation_steps']
-            self.scaler.scale(loss).backward()
+            self.scaler.scale(loss).backward(retain_graph=True)
             
             if (batch_idx + 1) % self.config['training']['gradient_accumulation_steps'] == 0:
                 self.scaler.step(self.optimizer)
@@ -95,7 +164,6 @@ class TimeSeriesForecastingTrainer(BaseTrainer):
     def _validate_epoch(self, dataloader: DataLoader):
         self.model.eval()
         total_loss = 0.0
-        total_accuracy = 0.0
         mae_metric = torchmetrics.MeanAbsoluteError().to(self.device)
         all_preds = []
         all_targets = []
@@ -110,7 +178,7 @@ class TimeSeriesForecastingTrainer(BaseTrainer):
                 predictions = self.model(memory, tgt_shifted)
                 # print(f"val predictions are {predictions[0]}")
                 # print(f"val targets are {tgt[0]}")
-                loss = self.loss_fn(predictions, tgt_golden)
+                loss = self.loss_fn(predictions, tgt_golden, tgt_shifted)
                 
                 total_loss += loss.item() * src.size(0)
                 mae_metric.update(predictions, tgt_golden)
@@ -155,6 +223,8 @@ class TimeSeriesForecastingTrainer(BaseTrainer):
 
     def train(self, train_loader, val_loader, epochs: int):
         best_val_loss = float('inf')
+        # Get current optimizer settings
+        optimizer_class = type(self.optimizer)
         
         for epoch in range(epochs):
             train_metrics = self._train_epoch(train_loader)

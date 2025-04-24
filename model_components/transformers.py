@@ -42,12 +42,11 @@ class TimeSeriesTransformer(nn.Module):
             nn.GELU(),                              # Activation
             nn.Dropout(dropout)                     # Dropout
         )
+        self.input_proj_norm = nn.LayerNorm(d_model)
         self.input_act = nn.GELU()
 
         self.tgt_embedding = nn.Linear(1, d_model)  # For univariate shifted targets
 
-
-        
         # Time2Vec module: outputs [batch, seq_len, d_freq + 1]
         self.time2vec = Time2VecTorch(num_frequency=d_freq)
 
@@ -70,7 +69,7 @@ class TimeSeriesTransformer(nn.Module):
 
         self.norm = nn.LayerNorm(self.combined_dim)
         # self.output_proj = nn.Linear(self.combined_dim, 1)
-        self.scale_factor = nn.Parameter(torch.tensor(2.0))  # Start at 1.0, but it will be learned
+        self.scale_factor = nn.Parameter(torch.tensor(0.3))  # Start at 1.0, but it will be learned
         self.output_proj = nn.Sequential(
             nn.Linear(self.combined_dim, 2*d_model),
             nn.GELU(),
@@ -98,6 +97,7 @@ class TimeSeriesTransformer(nn.Module):
         memory_time = memory[:, :, -1:]
 
         memory_proj = self.input_proj(memory_feat)         # [B, T, d_model]
+        memory_proj = self.input_proj_norm(memory_proj)  # Normalize projected features
         memory_time2vec = self.time2vec(memory)            # [B, T, d_freq + 1]
         memory_combined = torch.cat([memory_proj, memory_time2vec], dim=-1)  # [B, T, combined_dim]
         memory_combined = self.positional_encoding(memory_combined)
@@ -120,4 +120,6 @@ class TimeSeriesTransformer(nn.Module):
         # Output projection
         decoded = self.norm(decoded)
         output = self.output_proj(decoded)  # [B, T, 1]
-        return output * self.scale_factor
+        
+        # * self.scale_factor
+        return output 

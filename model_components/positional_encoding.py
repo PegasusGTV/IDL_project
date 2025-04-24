@@ -13,7 +13,7 @@ class TimeSeriesPositionalEncoding(nn.Module):
         d_model (int): Dimension of the input embeddings.
         max_len (int): Maximum sequence length (time steps).
     """
-    def __init__(self, d_model: int, max_len: int = 5000):
+    def __init__(self, d_model: int, max_len: int = 1000):
         super().__init__()
         self.d_model = d_model
         self.max_len = max_len

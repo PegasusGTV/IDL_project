@@ -74,6 +74,23 @@ class BaseTrainer(ABC):
         checkpoint_dir.mkdir(exist_ok=True)
         viz_dir.mkdir(exist_ok=True)
 
+        # if self.use_wandb:
+        #     """Initialize Weights & Biases logging."""
+        #     run_id = self.config['training'].get('wandb_run_id', None)
+        #     if run_id and run_id.lower() != "none":
+        #         self.wandb_run = wandb.init(
+        #             project=self.config['training'].get('wandb_project', 'default-project'),
+        #             id=run_id,
+        #             resume="must",
+        #             config=self.config
+        #         )
+        #     else:
+        #         self.wandb_run = wandb.init(
+        #             project=self.config['training'].get('wandb_project', 'default-project'),
+        #             config=self.config,
+        #             name=run_name
+        #         )
+
         return expt_root, checkpoint_dir, viz_dir, checkpoint_dir / 'best_model.pth', checkpoint_dir / 'last_model.pth'
 
     @abstractmethod

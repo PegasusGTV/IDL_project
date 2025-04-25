@@ -82,7 +82,7 @@ class TimeSeriesForecastingTrainer(BaseTrainer):
         super().__init__(model, config, run_name, config_file, device)
         # self.loss_fn = nn.MSELoss()
         # self.loss_fn = HybridLoss(init_w1 =10.0, init_w2 = 0.15).to(device)
-        self.loss_fn = HybridLoss(init_w1 =5.0, init_w2 = 0.15).to(device)
+        self.loss_fn = HybridLoss(init_w1 =10.0, init_w2 = 0.12).to(device)
         # default reduction- aceraging v/s summing 
         self.mae_metric = torchmetrics.MeanAbsoluteError().to(device)
         self.forecast_horizon = model.forecast_horizon
@@ -190,9 +190,19 @@ class TimeSeriesForecastingTrainer(BaseTrainer):
         # Concatenate all batches
         all_preds = torch.cat(all_preds, dim=0).numpy().reshape(-1, 1)
         all_targets = torch.cat(all_targets, dim=0).numpy().reshape(-1, 1)
-
+        import pandas as pd
         y_pred = self.target_scaler.inverse_transform(all_preds)
         y_true = self.target_scaler.inverse_transform(all_targets)
+        baseline = np.concatenate(([y_true[0]], y_true[:-1]))
+        mse_baseline = np.mean((y_true - baseline) ** 2)
+        mae_baseline = np.mean(np.abs(y_true - baseline))
+        mse_model    = np.mean((y_true - y_pred) ** 2)
+        mae_model    = np.mean(np.abs(y_true - y_pred))
+
+        loss_table = pd.DataFrame({
+            'Baseline': [mse_baseline, mae_baseline],
+            'Model':    [mse_model,    mae_model]
+        }, index=['MSE', 'MAE'])
 
         plt.figure(figsize=(8, 6))
         plt.title("Raw (Normalized) Predictions vs Targets")
@@ -215,6 +225,28 @@ class TimeSeriesForecastingTrainer(BaseTrainer):
         plt.grid(True)
         plt.show()
 
+        # import ace_tools as tools
+        # tools.display_dataframe_to_user("Loss Comparison", loss_table)
+
+        plt.figure(figsize=(10, 6))
+        plt.plot(y_true,    label='Actual', color='r')
+        plt.plot(y_pred,    label='Prediction', linestyle='--')
+        plt.plot(baseline,  label='Baseline (t–1)', linestyle=':')
+        plt.xlabel("Time Step")
+        plt.ylabel("Value")
+        plt.title("Actual vs. Prediction vs. Baseline")
+        plt.legend()
+        plt.grid(True)
+        plt.tight_layout()
+        plt.show()
+
+
+        try:
+            from ace_tools import display_dataframe_to_user
+            display_dataframe_to_user("Loss Comparison", loss_table)
+        except ImportError:
+            from IPython.display import display
+            display(loss_table)
     
         return {
             'val_loss': total_loss / len(dataloader.dataset),
@@ -250,7 +282,7 @@ class TimeSeriesForecastingTrainer(BaseTrainer):
             #     best_val_loss = val_metrics['val_loss']
             #     self.save_checkpoint('best_model.pth')
                 
-            self.save_checkpoint('last_model.pth')
+            # self.save_checkpoint('last_model.pth')
             
 
     def evaluate(self, test_loader):

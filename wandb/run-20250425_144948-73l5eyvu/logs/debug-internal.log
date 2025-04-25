@@ -1,0 +1,17 @@
+{"time":"2025-04-25T14:49:48.200181483-04:00","level":"INFO","msg":"stream: starting","core version":"0.19.9","symlink path":"/ocean/projects/cis250019p/thirunel/IDL_project/wandb/run-20250425_144948-73l5eyvu/logs/debug-core.log"}
+{"time":"2025-04-25T14:49:48.424339284-04:00","level":"INFO","msg":"created new stream","id":"73l5eyvu"}
+{"time":"2025-04-25T14:49:48.42439954-04:00","level":"INFO","msg":"stream: started","id":"73l5eyvu"}
+{"time":"2025-04-25T14:49:48.424422964-04:00","level":"INFO","msg":"writer: Do: started","stream_id":"73l5eyvu"}
+{"time":"2025-04-25T14:49:48.424421985-04:00","level":"INFO","msg":"handler: started","stream_id":"73l5eyvu"}
+{"time":"2025-04-25T14:49:48.424431687-04:00","level":"INFO","msg":"sender: started","stream_id":"73l5eyvu"}
+{"time":"2025-04-25T14:49:48.47032174-04:00","level":"ERROR","msg":"HTTP error","status":403,"method":"POST","url":"https://api.wandb.ai/graphql"}
+{"time":"2025-04-25T14:49:48.470427057-04:00","level":"ERROR","msg":"sender: upsertRun:","error":"failed to upsert bucket: returned error 403: {\"data\":{\"upsertBucket\":null},\"errors\":[{\"message\":\"permission denied\",\"path\":[\"upsertBucket\"],\"extensions\":{\"code\":\"PERMISSION_ERROR\"}}]}"}
+{"time":"2025-04-25T14:58:32.044552685-04:00","level":"INFO","msg":"stream: closing","id":"73l5eyvu"}
+{"time":"2025-04-25T14:58:32.044735972-04:00","level":"ERROR","msg":"sender: upsertConfig: RunRecord is nil"}
+{"time":"2025-04-25T14:58:32.15580526-04:00","level":"ERROR","msg":"HTTP error","status":404,"method":"POST","url":"https://api.wandb.ai/graphql"}
+{"time":"2025-04-25T14:58:32.155913288-04:00","level":"ERROR","msg":"runfiles: CreateRunFiles returned error: returned error 404: {\"data\":{\"createRunFiles\":null},\"errors\":[{\"message\":\"project /IDL_final project PegasusNG not found during createRunFiles\",\"path\":[\"createRunFiles\"]}]}"}
+{"time":"2025-04-25T14:58:32.1567289-04:00","level":"INFO","msg":"fileTransfer: Close: file transfer manager closed"}
+{"time":"2025-04-25T14:58:32.156778041-04:00","level":"INFO","msg":"handler: closed","stream_id":"73l5eyvu"}
+{"time":"2025-04-25T14:58:32.156798628-04:00","level":"INFO","msg":"writer: Close: closed","stream_id":"73l5eyvu"}
+{"time":"2025-04-25T14:58:32.156837161-04:00","level":"INFO","msg":"sender: closed","stream_id":"73l5eyvu"}
+{"time":"2025-04-25T14:58:32.157087916-04:00","level":"INFO","msg":"stream: closed","id":"73l5eyvu"}

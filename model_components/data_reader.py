@@ -9,7 +9,8 @@ from sklearn.preprocessing import MinMaxScaler, StandardScaler
 
 # Helper functions for feature calculations
 import pandas as pd
-import numpy as np
+from io import StringIO
+
 
 def compute_sma(df, column, window):
     """
@@ -161,28 +162,51 @@ class FinancialTimeSeriesDataset(Dataset):
             df['SMA_10'] = compute_sma(df, 'Close', window=10)
             df['RSI_14'] = compute_rsi(df, 'Close', window=14)
             df['HalfTrend_20'] = compute_halftrend(df)
+
+            
+
             # print(f"initial dataset is {df.head()}")
             # print(f"df columns are {df.columns}")
             # df['Time'] = (df.index - df.index.min()).days
-            df['Time', ticker] = np.arange(len(df))   #for continuous time
-
-            # print(f"after time dataset is {df.head()}")
-            # print(f"df columns are {df.columns}")
+            
 
             # Split into train/val if requested
             train_end_idx = int(len(df) * (1 - val_ratio))
-
-            # if split == 'train':
-            #     df = df.iloc[:train_end_idx]
-            # elif split == 'val':
-            #     df = df.iloc[train_end_idx:]
            
             # Add normalized time feature
             # df['Time'] = (df['Time'] - df['Time'].min()) / (df['Time'].max() - df['Time'].min())
             # print(f"after resorting dataset is {df["Close"].head()}")
             df.columns = ['{}'.format(col[0]) for col in df.columns]
-            cls_features = [f for f in features if f != target]
-            print(cls_features)
+            df.reset_index().rename(columns={'Date': 'date'})
+
+            # print(f"after time dataset is {df.head()}")
+            # print(f"df columns are {df.head}")
+            print(f"df columns are {df.columns}")
+
+            # ADDING SENTIMENT DATA
+
+            sentiment_df = pd.read_csv('daily_finbert_sentiment.csv')
+            print(f"sentiment_df is {sentiment_df.columns}")
+            sentiment_df['date'] = pd.to_datetime(sentiment_df['date'])
+
+            # Generate full date range (replace with actual Yahoo Finance dates)
+            merged_df = pd.merge_asof(
+                left=df.reset_index().rename(columns={'Date': 'date'}),
+                right=sentiment_df[['date', 'sentiment_score']],
+                on='date',
+                direction='nearest'
+            ).set_index('date')
+
+
+            # Linear interpolation for missing values
+            merged_df['sentiment_score'] = merged_df['sentiment_score'].interpolate(method='linear')
+            merged_df['Time'] = np.arange(len(merged_df))   #for continuous time
+
+            df = merged_df
+            cls_features = [f for f in df.columns if f != target]
+
+
+            # ADDING SENTIMENT DATA
             
 
             if normalize:
@@ -204,6 +228,9 @@ class FinancialTimeSeriesDataset(Dataset):
                 df = df.iloc[:train_end_idx]
             elif split == 'val':
                 df = df.iloc[train_end_idx:]
+
+            print(f"after normalization dataset is {df[cls_features].head()}")
+            print(f"after normalization dataset is {df[target].head()}")
            
 
             # df = df.reset_index(drop=True)

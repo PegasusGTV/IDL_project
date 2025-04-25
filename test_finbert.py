@@ -92,7 +92,9 @@ def main():
     plt.ylabel("Sentiment Score (-1 = Negative, 0 = Neutral, 1 = Positive)")
     plt.grid(True)
     plt.tight_layout()
+    plt.savefig("finbert_sentiment_plot.png", dpi=300)
     plt.show()
+
 
 if __name__ == "__main__":
     main()

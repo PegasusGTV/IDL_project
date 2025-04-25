@@ -81,7 +81,7 @@ class TimeSeriesForecastingTrainer(BaseTrainer):
     def __init__(self, model, config, run_name, config_file, scaler, device=None):
         super().__init__(model, config, run_name, config_file, device)
         # self.loss_fn = nn.MSELoss()
-        self.loss_fn = HybridLoss(init_w1 = 0.0, init_w2 = 1.0).to(device)
+        self.loss_fn = HybridLoss(init_w1 =5.0, init_w2 = 0.15).to(device)
         # default reduction- aceraging v/s summing 
         self.mae_metric = torchmetrics.MeanAbsoluteError().to(device)
         self.forecast_horizon = model.forecast_horizon

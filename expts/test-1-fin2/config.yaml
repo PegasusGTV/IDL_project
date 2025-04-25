@@ -17,7 +17,7 @@ model: # Decoder-Only Language Model (HW4P1)
   d_model                   : 124
   d_ff                      : 64
   d_freq                    : 3    #how many dimensions to split time into- must be odd because it adds 1?
-  num_layers                : 2
+  num_layers                : 4 
   num_heads                 : 16
   dropout                   : 0.2
 

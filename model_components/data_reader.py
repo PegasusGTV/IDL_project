@@ -158,9 +158,9 @@ class FinancialTimeSeriesDataset(Dataset):
             df = df.dropna()
             
             # Add additional features
-            # df['SMA_10'] = compute_sma(df, 'Close', window=10)
-            # df['RSI_14'] = compute_rsi(df, 'Close', window=14)
-            # df['HalfTrend_20'] = compute_halftrend(df)
+            df['SMA_10'] = compute_sma(df, 'Close', window=10)
+            df['RSI_14'] = compute_rsi(df, 'Close', window=14)
+            df['HalfTrend_20'] = compute_halftrend(df)
             # print(f"initial dataset is {df.head()}")
             # print(f"df columns are {df.columns}")
             # df['Time'] = (df.index - df.index.min()).days

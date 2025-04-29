@@ -82,7 +82,7 @@ class TimeSeriesForecastingTrainer(BaseTrainer):
         super().__init__(model, config, run_name, config_file, device)
         # self.loss_fn = nn.MSELoss()
         # self.loss_fn = HybridLoss(init_w1 =10.0, init_w2 = 0.15).to(device)
-        self.loss_fn = HybridLoss(init_w1 =10.0, init_w2 = 0.12).to(device)
+        self.loss_fn = HybridLoss(init_w1 = 10.0, init_w2 = 0.15).to(device)
         # default reduction- aceraging v/s summing 
         self.mae_metric = torchmetrics.MeanAbsoluteError().to(device)
         self.forecast_horizon = model.forecast_horizon
@@ -161,8 +161,12 @@ class TimeSeriesForecastingTrainer(BaseTrainer):
             'train_mae': self.mae_metric.compute().item(),
             'train_accuracy': avg_accuracy
         }
+    
 
     def _validate_epoch(self, dataloader: DataLoader):
+        from statsmodels.tsa.arima.model import ARIMA
+        import warnings
+        warnings.filterwarnings('ignore') 
         self.model.eval()
         total_loss = 0.0
         mae_metric = torchmetrics.MeanAbsoluteError().to(self.device)
@@ -199,10 +203,25 @@ class TimeSeriesForecastingTrainer(BaseTrainer):
         mse_model    = np.mean((y_true - y_pred) ** 2)
         mae_model    = np.mean(np.abs(y_true - y_pred))
 
+        series = y_true.flatten()
+        arima_mod = ARIMA(series, order=(1,1,1))
+        arima_res = arima_mod.fit()
+        arima_fit = arima_res.predict(start=1, end=len(series)-1)      # length N-1
+        arima_preds = np.concatenate(([series[0]], arima_fit)).reshape(-1,1)
+
+        mse_arima = np.mean((series.reshape(-1,1) - arima_preds)**2)
+        mae_arima = np.mean(np.abs(series.reshape(-1,1) - arima_preds))
+
+        # loss_table = pd.DataFrame({
+        #     'Baseline': [mse_baseline, mae_baseline],
+        #     'Model':    [mse_model,    mae_model]
+        # }, index=['MSE', 'MAE'])
         loss_table = pd.DataFrame({
             'Baseline': [mse_baseline, mae_baseline],
-            'Model':    [mse_model,    mae_model]
-        }, index=['MSE', 'MAE'])
+            'Model':    [mse_model,    mae_model],
+            'ARIMA':    [mse_arima,    mae_arima]
+        }, index=['MSE','MAE'])
+
 
         plt.figure(figsize=(8, 6))
         plt.title("Raw (Normalized) Predictions vs Targets")
@@ -240,13 +259,25 @@ class TimeSeriesForecastingTrainer(BaseTrainer):
         plt.tight_layout()
         plt.show()
 
+        plt.figure(figsize=(8,6))
+        plt.plot(y_true,     '-k',  label='actual')
+        plt.plot(y_pred,     '--r', label='model')
+        plt.plot(baseline,   ':b',  label='baseline (t–1)')
+        plt.plot(arima_preds, '-.g',label='ARIMA(1,1,1)')
+        plt.title("Actual / Model / Baseline / ARIMA"); plt.legend(); plt.grid(True); plt.tight_layout()
+        plt.show()
 
-        try:
-            from ace_tools import display_dataframe_to_user
-            display_dataframe_to_user("Loss Comparison", loss_table)
-        except ImportError:
-            from IPython.display import display
-            display(loss_table)
+
+        # try:
+        #     from ace_tools import display_dataframe_to_user
+        #     display_dataframe_to_user("Loss Comparison", loss_table)
+        # except ImportError:
+        #     from IPython.display import display
+        #     display(loss_table)
+        from IPython.display import display
+        display(loss_table)
+        print(total_loss)
+
     
         return {
             'val_loss': total_loss / len(dataloader.dataset),

@@ -159,9 +159,9 @@ class FinancialTimeSeriesDataset(Dataset):
             df = df.dropna()
             
             # Add additional features
-            df['SMA_10'] = compute_sma(df, 'Close', window=10)
-            df['RSI_14'] = compute_rsi(df, 'Close', window=14)
-            df['HalfTrend_20'] = compute_halftrend(df)
+            # df['SMA_10'] = compute_sma(df, 'Close', window=10)
+            # df['RSI_14'] = compute_rsi(df, 'Close', window=14)
+            # df['HalfTrend_20'] = compute_halftrend(df)
 
             
 
@@ -185,24 +185,24 @@ class FinancialTimeSeriesDataset(Dataset):
 
             # ADDING SENTIMENT DATA
 
-            sentiment_df = pd.read_csv('daily_finbert_sentiment.csv')
-            print(f"sentiment_df is {sentiment_df.columns}")
-            sentiment_df['date'] = pd.to_datetime(sentiment_df['date'])
+            # sentiment_df = pd.read_csv('daily_finbert_sentiment.csv')
+            # print(f"sentiment_df is {sentiment_df.columns}")
+            # sentiment_df['date'] = pd.to_datetime(sentiment_df['date'])
 
-            # Generate full date range (replace with actual Yahoo Finance dates)
-            merged_df = pd.merge_asof(
-                left=df.reset_index().rename(columns={'Date': 'date'}),
-                right=sentiment_df[['date', 'sentiment_score']],
-                on='date',
-                direction='nearest'
-            ).set_index('date')
+            # # Generate full date range (replace with actual Yahoo Finance dates)
+            # merged_df = pd.merge_asof(
+            #     left=df.reset_index().rename(columns={'Date': 'date'}),
+            #     right=sentiment_df[['date', 'sentiment_score']],
+            #     on='date',
+            #     direction='nearest'
+            # ).set_index('date')
 
 
             # Linear interpolation for missing values
-            merged_df['sentiment_score'] = merged_df['sentiment_score'].interpolate(method='linear')
-            merged_df['Time'] = np.arange(len(merged_df))   #for continuous time
+            # merged_df['sentiment_score'] = merged_df['sentiment_score'].interpolate(method='linear')
+            # merged_df['Time'] = np.arange(len(merged_df))   #for continuous time
 
-            df = merged_df
+            # df = merged_df
             cls_features = [f for f in df.columns if f != target]
 
 

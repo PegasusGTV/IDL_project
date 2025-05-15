@@ -33,41 +33,28 @@ class HybridLoss(nn.Module):
         # Additive Brownian Motion Regularization
         # returns = (targets - tgt_shifted)  # Shape: [B, T]
         mu = targets.mean(dim=1, keepdim=True)  # [B, 1]
-        # print(f"mu shape is {mu}")
         sigma = targets.std(dim=1, keepdim=True)  # [B, 1]
-        # print(f"sigma shape is {sigma}")
 
         B, T, D = predictions.shape
 
         # Time vector and Wiener process (cumulative Gaussian noise)
         time_vector = torch.arange(T, device=predictions.device).float().unsqueeze(1)  # [T, 1]
-        # print(f"time_vector shape is {time_vector}")
         dt = 1.0  # time step (could be made configurable)
         
         # Sample Wiener process: W(t) ~ N(0, t)
         # So increments are sqrt(dt) * N(0, 1)
         dW = torch.randn(B, T, 1, device=predictions.device) * (dt ** 0.5)  # [B, T, 1]
-        # print(f"dW shape is {dW}")
 
         # Brownian path: cumulative sum of dW along the time dimension
         W_t = torch.cumsum(dW, dim=1)  # [B, T, 1]
-        # print(f"W_t shape is {W_t}")
 
-        # ABM path: X(0) + mu * t + sigma * W(t)
         X_0 = tgt_shifted  # [B, 1]
-        # print(f"X_0 shape is {X_0.shape}")
         mu_term = mu * time_vector  # [B, T]
-        # print(f"mu_term shape is {mu_term}")
         sigma_term = sigma * W_t  # [B, T]
-        # print(f"sigma_term shape is {sigma_term}")
         abm_path = X_0 + mu_term + sigma_term  # [B, T]
-        # print(f"abm_path shape is {abm_path}")
 
         # Match prediction dimensions (assuming [B, T, 1])
         abm_loss = torch.mean((predictions - abm_path) ** 2)
-
-        print(f"mse_loss is {mse_loss}")
-        print(f"abm_loss is {abm_loss}")
 
         # Total loss
         # loss = self.w1*mse_loss + self.w2 * abm_loss
@@ -82,7 +69,7 @@ class TimeSeriesForecastingTrainer(BaseTrainer):
         super().__init__(model, config, run_name, config_file, device)
         # self.loss_fn = nn.MSELoss()
         # self.loss_fn = HybridLoss(init_w1 =10.0, init_w2 = 0.15).to(device)
-        self.loss_fn = HybridLoss(init_w1 =5.0, init_w2 = 0.15).to(device)
+        self.loss_fn = HybridLoss(init_w1 =1.0, init_w2 = 0.0).to(device)
         # default reduction- aceraging v/s summing 
         self.mae_metric = torchmetrics.MeanAbsoluteError().to(device)
         self.forecast_horizon = model.forecast_horizon
@@ -102,23 +89,11 @@ class TimeSeriesForecastingTrainer(BaseTrainer):
             tgt_shifted = tgt_shifted.to(self.device)
             memory = memory.to(self.device)
             tgt_golden = tgt_golden.to(self.device)
-
-            # last_close = src[:, -1:, 3:4]  # Shape: [B, 1, 1]
-            # naive_pred = last_close.repeat(1, self.forecast_horizon, 1)
-            # naive_loss = self.loss_fn(naive_pred, tgt_golden)
-            # print(naive_loss)
-            # print(src.shape)
-            # print(tgt.shape)
             
             self.optimizer.zero_grad()
             
             with torch.autocast(device_type=self.device, dtype=torch.float16):
                 predictions = self.model(memory, tgt_shifted)
-                # print(f"train predictions are {predictions[0]}")
-                # print(f"train targets are {tgt_golden.shape}")
-                # print(f"train predictions are {predictions.shape}")
-                # print(f"train src are {src.shape}")
-                # print(f"train memory are {memory.shape}")
                 loss = self.loss_fn(predictions, tgt_golden, tgt_shifted)
             
             # Gradient accumulation
@@ -163,57 +138,127 @@ class TimeSeriesForecastingTrainer(BaseTrainer):
         }
 
     def _validate_epoch(self, dataloader: DataLoader):
+        # self.model.eval()
+        # total_loss = 0.0
+        # mae_metric = torchmetrics.MeanAbsoluteError().to(self.device)
+        # all_preds = []
+        # all_targets = []
+
+        # with torch.no_grad():
+        #     for src, memory, tgt_shifted, tgt_golden in dataloader:
+        #         src = src.to(self.device)
+        #         tgt_shifted = tgt_shifted.to(self.device)
+        #         memory = memory.to(self.device)
+        #         tgt_golden = tgt_golden.to(self.device)
+                
+        #         predictions = self.model(memory, tgt_shifted)
+        #         # print(f"val predictions are {predictions[0]}")
+        #         # print(f"val targets are {tgt[0]}")
+        #         loss = self.loss_fn(predictions, tgt_golden, tgt_shifted)
+                
+        #         total_loss += loss.item() * src.size(0)
+        #         mae_metric.update(predictions, tgt_golden)
+
+        #         all_preds.append(predictions.detach().cpu())
+        #         all_targets.append(tgt_golden.detach().cpu())
+        
+        # # Concatenate all batches
+        # all_preds = torch.cat(all_preds, dim=0).numpy().reshape(-1, 1)
+        # all_targets = torch.cat(all_targets, dim=0).numpy().reshape(-1, 1)
+
+        # T_total = (                                     # original length
+        #     (len(dataloader.dataset) - 1) * self.shift
+        #     + self.window_size
+        # )
+        # y_true = np.full(T_total, np.nan)
+        # y_pred = np.full(T_total, np.nan)
+
+        # y_pred = self.target_scaler.inverse_transform(all_preds)
+        # y_true = self.target_scaler.inverse_transform(all_targets)
+
+        # plt.figure(figsize=(8, 6))
+        # plt.title("Raw (Normalized) Predictions vs Targets")
+        # plt.plot(all_targets, color='blue', linestyle='--')
+        # plt.plot(all_preds, color='red', linestyle='--')
+        # plt.xlabel("Time step")
+        # plt.ylabel("Normalized Close Value")
+        # plt.legend(('actual (normalized)', 'prediction (normalized)'), loc='upper left', fontsize=12)
+        # plt.grid(True)
+        # plt.tight_layout()
+        # plt.show()
+        
+        # plt.figure(figsize=(8, 8))
+        # plt.title("actual v/s predicted values")
+        # plt.plot(y_true, color='b')
+        # plt.plot(y_pred, color='r')
+        # plt.xlabel("Time value (day)")
+        # plt.ylabel("Close value (point)")
+        # plt.legend(('actual', 'prediction'), loc='upper left', fontsize=12)
+        # plt.grid(True)
+        # plt.show()
+        # --------------------------------------------------
+        # 1. Pre-allocate arrays for the full chronological axis
+        # --------------------------------------------------
+        # length before windowing:
+        self.shift = dataloader.dataset.shift
+        self.window_size = dataloader.dataset.window_size
+        T_total = (                                     # original length
+            (len(dataloader.dataset) - 1) * dataloader.dataset.shift
+            + dataloader.dataset.window_size
+        )
+        y_true = np.full(T_total, np.nan)
+        y_pred = np.full(T_total, np.nan)
+
+        # --------------------------------------------------
+        # 2. Fill them window-by-window
+        # --------------------------------------------------
         self.model.eval()
-        total_loss = 0.0
         mae_metric = torchmetrics.MeanAbsoluteError().to(self.device)
-        all_preds = []
-        all_targets = []
+        total_loss = 0.0
 
         with torch.no_grad():
-            for src, memory, tgt_shifted, tgt_golden in dataloader:
-                src = src.to(self.device)
-                tgt_shifted = tgt_shifted.to(self.device)
-                memory = memory.to(self.device)
-                tgt_golden = tgt_golden.to(self.device)
-                
-                predictions = self.model(memory, tgt_shifted)
-                # print(f"val predictions are {predictions[0]}")
-                # print(f"val targets are {tgt[0]}")
-                loss = self.loss_fn(predictions, tgt_golden, tgt_shifted)
-                
+            for batch_idx, (src, memory, tgt_shifted, tgt_golden) in enumerate(dataloader):
+                src, memory       = src.to(self.device), memory.to(self.device)
+                tgt_shifted       = tgt_shifted.to(self.device)
+                tgt_golden        = tgt_golden.to(self.device)
+
+                preds  = self.model(memory, tgt_shifted)
+                loss   = self.loss_fn(preds, tgt_golden, tgt_shifted)
                 total_loss += loss.item() * src.size(0)
-                mae_metric.update(predictions, tgt_golden)
+                mae_metric.update(preds, tgt_golden)
 
-                all_preds.append(predictions.detach().cpu())
-                all_targets.append(tgt_golden.detach().cpu())
-        
-        # Concatenate all batches
-        all_preds = torch.cat(all_preds, dim=0).numpy().reshape(-1, 1)
-        all_targets = torch.cat(all_targets, dim=0).numpy().reshape(-1, 1)
+                # ------- keep ONLY the final time-step of each sequence -------
+                # shapes: [B, window, 1] → pick [:, -1, 0]
+                preds_last  = preds[:,  -1, 0].cpu().numpy()
+                target_last = tgt_golden[:, -1, 0].cpu().numpy()
 
-        y_pred = self.target_scaler.inverse_transform(all_preds)
-        y_true = self.target_scaler.inverse_transform(all_targets)
+                # absolute time-index of that last step for each example in batch
+                #   window i starts at i*shift, ends at i*shift + window_size - 1
+                base = batch_idx * dataloader.batch_size * self.shift
+                idxs = base + np.arange(src.size(0)) * self.shift + self.window_size - 1
 
-        plt.figure(figsize=(8, 6))
-        plt.title("Raw (Normalized) Predictions vs Targets")
-        plt.plot(all_targets, color='blue', linestyle='--')
-        plt.plot(all_preds, color='red', linestyle='--')
+                y_true[idxs] = target_last
+                y_pred[idxs] = preds_last
+
+        # --------------------------------------------------
+        # 3. Inverse-transform and plot
+        # --------------------------------------------------
+        mask = ~np.isnan(y_true)                # remove the NaNs we left as placeholders
+        y_true = self.target_scaler.inverse_transform(y_true[mask].reshape(-1, 1)).ravel()
+        y_pred = self.target_scaler.inverse_transform(y_pred[mask].reshape(-1, 1)).ravel()
+        x_axis = np.where(mask)[0]              # the matching time indices
+
+        plt.figure(figsize=(10, 6))
+        plt.plot(x_axis, y_true, label="actual",  lw=2)
+        plt.plot(x_axis, y_pred, label="prediction", lw=2, alpha=0.8)
+        plt.title("Actual vs Predicted (one point per day)")
         plt.xlabel("Time step")
-        plt.ylabel("Normalized Close Value")
-        plt.legend(('actual (normalized)', 'prediction (normalized)'), loc='upper left', fontsize=12)
+        plt.ylabel("Close value")
+        plt.legend()
         plt.grid(True)
         plt.tight_layout()
         plt.show()
-        
-        plt.figure(figsize=(8, 8))
-        plt.title("actual v/s predicted values")
-        plt.plot(y_true, color='b')
-        plt.plot(y_pred, color='r')
-        plt.xlabel("Time value (day)")
-        plt.ylabel("Close value (point)")
-        plt.legend(('actual', 'prediction'), loc='upper left', fontsize=12)
-        plt.grid(True)
-        plt.show()
+
 
     
         return {

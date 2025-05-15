@@ -22,7 +22,7 @@ class Time2VecTorch(nn.Module):
         self.w = nn.Parameter(torch.randn(num_frequency))  # Frequencies
         self.b = nn.Parameter(torch.randn(num_frequency))  # Phases
 
-    def forward(self, x: torch.Tensor) -> torch.Tensor:
+    def forward(self, t: torch.Tensor) -> torch.Tensor:
         """
         Args:
             x (Tensor): Input of shape [batch_size, time_steps, feature_dim],
@@ -31,8 +31,10 @@ class Time2VecTorch(nn.Module):
         Returns:
             Tensor: Time2Vec embedding of shape [batch_size, time_steps, 1 + num_frequency]
         """
-        t = x[:, :, -1:]  # Extract time feature: [B, T, 1]
-
+        # DEBUG:
+        with torch.no_grad():
+            self.w.zero_()
+            self.b.zero_()
         # Linear trend: w0 * t + b0 → [B, T, 1]
         trend = self.w0 * t + self.b0
 
